@@ -64,6 +64,7 @@ export class AppComponent implements OnInit, OnDestroy{
       }
     )
   }
+
   public onUpdateEmloyee(employee: Employee): void {
     this.employeeService.updateEmployee(employee)
       .pipe(
@@ -90,7 +91,7 @@ export class AppComponent implements OnInit, OnDestroy{
     .subscribe(
       (response: void) => {
         console.log(response);
-      //  this.getEmployees(); 
+      //  this.getEmployees();
      this.employees = this.employees.filter((employee)=> employee.id !== employeeId)
       },
       (error: HttpErrorResponse) => {
@@ -104,9 +105,9 @@ export class AppComponent implements OnInit, OnDestroy{
     const results: Employee[] = [];
     for (const employee of this.employees) {
       if (employee.name.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || employee.email.toLowerCase().indexOf(key.toLowerCase()) !== -1
+      || employee.surname.toLowerCase().indexOf(key.toLowerCase()) !== -1
       || employee.phone.toLowerCase().indexOf(key.toLowerCase()) !== -1
-      || employee.jobTitle.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
+      || employee.birthday.toLowerCase().indexOf(key.toLowerCase()) !== -1) {
         results.push(employee);
       }
     }

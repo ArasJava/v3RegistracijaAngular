@@ -1,9 +1,13 @@
 export interface Employee {
     id: number;
+    doctor: string;
+    date: string;
+    time: string;
+    purpose: string;
     name: string;
-    email: string;
-    jobTitle: string;
+    surname: string;
+    birthday: string;
     phone: string;
-    imageUrl: string;
+    message: string;
     employeeCode: string;
 }
