@@ -1,262 +1,308 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-secondary">
   <a class="navbar-brand" style="color:white;">Registratorės aplinka</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" >
-  <span class="navbar-toggler-icon"></span>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+          aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarColor02">
-     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active" >
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
         <a class="nav-link" (click)="onOpenModal(null, 'add')">Registruoti<span class="sr-only">(current)</span></a>
-        <a class="nav-link" (click)="onOpenModal(null, 'workTime')">Gydytojų užimtumas<span class="sr-only">(current)</span></a>
-     </li>
-     </ul>
-     <form class="form-inline my-2 my-lg-0">
-        <input type="search" (ngModelChange)="searchEmployees(key.value)" #key="ngModel" ngModel
-         name="key" id="searchName" class="form-control mr-sm-2" placeholder="Paciento paieška" required>
-     </form>
+        <a class="nav-link" (click)="onOpenModal(null, 'workTime')">Gydytojų užimtumas<span
+          class="sr-only">(current)</span></a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <input type="search" (ngModelChange)="searchEmployees(key.value)" #key="ngModel" ngModel
+             name="key" id="searchName" class="form-control mr-sm-2" placeholder="Paciento paieška" required>
+    </form>
   </div>
 </nav>
 <div class="container" id="main-container">
-<div class="row">
-  <div *ngFor="let employee of employees" class="col-md-6 col-xl-3">
-     <div class="card m-b-30">
+  <div class="row">
+    <div *ngFor="let employee of employees" class="col-md-6 col-xl-3">
+      <div class="card m-b-30">
         <div class="card-body row">
-<!--           <div class="col-6">-->
-<!--              <a href=""><img src="{{employee?.message}}" alt="" class="img-fluid rounded-circle w-60"></a>-->
-<!--           </div>-->
-           <div class="col-6 card-title align-self-center mb-0">
-              <h5>Gydytojas{{employee?.doctor}}</h5>
-<!--              <p class="m-0">{{employee?.birthday}}</p>-->
-           </div>
+
+          <div class="col-6 card-title align-self-center mb-0">
+            <h5>Gydytojas {{employee?.doctor}}</h5>
+
+          </div>
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Data : {{employee?.date}}</li>
           <li class="list-group-item">Laikas : {{employee?.time}}</li>
           <li class="list-group-item">Pirmas/pakartotinis/procedura : {{employee?.purpose}}</li>
-           <li class="list-group-item">Vardas : {{employee?.name}}</li>
-           <li class="list-group-item">Pavardė: {{employee?.surname}}</li>
-           <li class="list-group-item">Gimimo data: {{employee?.birthday}}</li>
-           <li class="list-group-item">Telefonas: {{employee?.phone}}</li>
-           <li class="list-group-item">Kreipėsi dėl: {{employee?.message}}</li>
+          <li class="list-group-item">Vardas : {{employee?.name}}</li>
+          <li class="list-group-item">Pavardė: {{employee?.surname}}</li>
+          <li class="list-group-item">Gimimo data: {{employee?.birthday}}</li>
+          <li class="list-group-item">Telefonas: {{employee?.phone}}</li>
+          <li class="list-group-item">Kreipėsi dėl: {{employee?.message}}</li>
 
         </ul>
         <div class="card-body">
-           <div class="float-right btn-group btn-group-sm">
-              <a (click)="onOpenModal(employee, 'edit')" class="btn btn-primary tooltips" data-placement="top" data-original-title="Redaguoti"><i class="fa fa-pencil"></i> </a>
-              <a (click)="onOpenModal(employee, 'delete')" class="btn btn-secondary tooltips" data-placement="top" data-original-title="Ištrinti"><i class="fa fa-times"></i></a>
-           </div>
+          <div class="float-right btn-group btn-group-sm">
+            <a (click)="onOpenModal(employee, 'edit')" class="btn btn-primary tooltips" data-placement="top"
+               data-original-title="Redaguoti"><i class="fa fa-pencil"></i> </a>
+            <a (click)="onOpenModal(employee, 'delete')" class="btn btn-secondary tooltips" data-placement="top"
+               data-original-title="Ištrinti"><i class="fa fa-times"></i></a>
+          </div>
         </div>
-     </div>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- Add Registration  Modal -->
-<div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-       <div class="modal-header">
+  <!-- Add Registration  Modal -->
+  <div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
           <h5 class="modal-title" id="addEmployeeModalLabel">Nauja registracija</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+            <span aria-hidden="true">&times;</span>
           </button>
-       </div>
-       <div class="modal-body">
+        </div>
+        <div class="modal-body">
           <form #addForm="ngForm" (ngSubmit)="onAddEmployee(addForm)">
-<!--Gydytoją pasirenkame is sarašo-->
+            <!--Gydytoją pasirenkame is sarašo-->
             <div class="form-group">
-              <label for="doctor">Pasirinkite gydytoją iš sąrašo</label>
-              <select id="doctor" name="doctor" ngModel name ="doctor" class="form-control" multiple aria-label="multiple select example">
-                          <option value="Pirmas">Pirmas Gydytojas</option>
-                          <option value="Antras">Antras Gydytojas</option>
-                          <option value="Trečias">Trečias Gydytojas</option>
+              <label for="doctor">Gydytojas (renkamės iš sąrašo) </label>
+              <select id="doctor" ngModel name="doctor" class="form-control">
+                <option value="pirmasis">Pirmasis Gydytojas</option>
+                <option value="antrasis">Antrasis Gydytojas</option>
+                <option value="trečiasis">Trečiasis Gydytojas</option>
               </select>
             </div>
-<!--  Gydytoją įvedame ranka          -->
-<!--            <div class="form-group">-->
-<!--              <label for="doctor">Gydytojas</label>-->
-<!--              <input type="text" ngModel name="doctor" class="form-control" id="doctor" placeholder=" gydytojas" required>-->
-<!--            </div>-->
+            <!--  Gydytoją įvedame ranka          -->
+            <!--            <div class="form-group">-->
+            <!--              <label for="doctor">Gydytojas</label>-->
+            <!--              <input type="text" ngModel name="doctor" class="form-control" id="doctor" placeholder=" gydytojas" required>-->
+            <!--            </div>-->
 
             <div class="form-group">
-              <label for="name">Data</label>
+              <label for="date">Data</label>
               <input type="text" ngModel name="date" class="form-control" id="date" placeholder="data" required>
             </div>
             <div class="form-group">
-              <label for="name">Laikas</label>
+              <label for="time">Laikas</label>
               <input type="text" ngModel name="time" class="form-control" id="time" placeholder="laikas" required>
             </div>
             <div class="form-group">
-              <label for="name">Pirmas/pakartotinas/procedura</label>
-              <input type="text" ngModel name="purpose" class="form-control" id="purpose" placeholder="pirmas/pakartotinas/procedura" required>
+              <label for="purpose">Pirmas/pakartotinas/procedura</label>
+              <input type="text" ngModel name="purpose" class="form-control" id="purpose"
+                     placeholder="pirmas/pakartotinas/procedura" required>
             </div>
 
-          <div class="form-group">
-             <label for="name">Vardas</label>
-             <input type="text" ngModel name="name" class="form-control" id="name" placeholder="vardas" required>
-          </div>
-          <div class="form-group">
-             <label for="surname">Pavardė</label>
-             <input type="text" ngModel name="surname" class="form-control" id="surname" placeholder="pavardė" required>
-          </div>
-          <div class="form-group">
-             <label for="birthday">Gimimo data</label>
-             <input type="text" ngModel name="birthday" class="form-control" id="birthday" placeholder="gimtadienis" required>
-          </div>
-          <div class="form-group">
-             <label for="phone">Telefono numeris</label>
-             <input type="text" ngModel name="phone" class="form-control" id="phone" placeholder="telefonas" required>
-          </div>
-          <div class="form-group">
-             <label for="message">Vizito priežastis </label>
-             <input type="text" ngModel name="message" class="form-control" id="message" placeholder="vizito priežastis" required>
-          </div>
-          <div class="modal-footer">
-             <button type="button" id="add-employee-form" class="btn btn-secondary" data-dismiss="modal">Atsisakyti</button>
-             <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary" >Patvirtinti</button>
-          </div>
+            <div class="form-group">
+              <label for="name">Vardas</label>
+              <input type="text" ngModel name="name" class="form-control" id="name" placeholder="vardas" required>
+            </div>
+            <div class="form-group">
+              <label for="surname">Pavardė</label>
+              <input type="text" ngModel name="surname" class="form-control" id="surname" placeholder="pavardė"
+                     required>
+            </div>
+            <div class="form-group">
+              <label for="birthday">Gimimo data</label>
+              <input type="text" ngModel name="birthday" class="form-control" id="birthday" placeholder="gimtadienis"
+                     required>
+            </div>
+            <div class="form-group">
+              <label for="phone">Telefono numeris</label>
+              <input type="text" ngModel name="phone" class="form-control" id="phone" placeholder="telefonas" required>
+            </div>
+            <div class="form-group">
+              <label for="message">Vizito priežastis </label>
+              <input type="text" ngModel name="message" class="form-control" id="message"
+                     placeholder="vizito priežastis" required>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="add-employee-form" class="btn btn-secondary" data-dismiss="modal">Atsisakyti
+              </button>
+              <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Patvirtinti</button>
+            </div>
           </form>
-       </div>
+        </div>
+      </div>
     </div>
   </div>
-  </div>
 
-<!-- Edit Registration Modal -->
-<div class="modal fade" id="updateEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-     <div class="modal-content">
+  <!-- Edit Registration Modal -->
+  <div class="modal fade" id="updateEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
         <div class="modal-header">
-           <h5 class="modal-title" id="updateEmployeeModalLabel">Koreguojame {{editEmployee?.name}} pasirinkimą</h5>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-           </button>
+          <h5 class="modal-title" id="updateEmployeeModalLabel">Redaguojame {{editEmployee?.name}} pasirinkimą</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
         <div class="modal-body">
-           <form #editForm="ngForm">
-             <div class="form-group">
-               <label for="doctor">Gydytojas</label>
-               <input type="text" ngModel="{{editEmployee?.doctor}}" name="doctor" class="form-control" id="doctor">
-             </div>
-             <div class="form-group">
-               <label for="date">Data</label>
-               <input type="text" ngModel="{{editEmployee?.date}}" name="date" class="form-control" id="date">
-             </div>
-             <div class="form-group">
-               <label for="time">Laikas</label>
-               <input type="text" ngModel="{{editEmployee?.time}}" name="time" class="form-control" id="time">
-             </div>
-             <div class="form-group">
-               <label for="name">Pirmas/pakartotinas/procedura</label>
-               <input type="text" ngModel="{{editEmployee?.purpose}}" name="purpose" class="form-control" id="purpose">
-             </div>
+          <form #editForm="ngForm">
+            <div class="form-group">
+              <label for="doctor">Gydytojas</label>
+              <input type="text" ngModel="{{editEmployee?.doctor}}" name="doctor" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="date">Data</label>
+              <input type="text" ngModel="{{editEmployee?.date}}" name="date" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="time">Laikas</label>
+              <input type="text" ngModel="{{editEmployee?.time}}" name="time" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="name">Pirmas/pakartotinas/procedura</label>
+              <input type="text" ngModel="{{editEmployee?.purpose}}" name="purpose" class="form-control">
+            </div>
 
-              <div class="form-group">
-                 <label for="name">Vardas</label>
-                 <input type="text" ngModel="{{editEmployee?.name}}" name="name" class="form-control" id="name" aria-describedby="emailHelp">
-              </div>
-              <input type="hidden" ngModel="{{editEmployee?.id}}" name="id" class="form-control" id="id">
-              <input type="hidden" ngModel="{{editEmployee?.employeeCode}}" name="userCode" class="form-control" id="userCode">
-              <div class="form-group">
-                 <label for="surname">Pavardė</label>
-                 <input type="email" ngModel="{{editEmployee?.surname}}" name="surname" class="form-control" id="surname">
-              </div>
-              <div class="form-group">
-                 <label for="birthday">Gimimo data</label>
-                 <input type="text" ngModel="{{editEmployee?.birthday}}" name="birthday" class="form-control" id="birthday">
-              </div>
-              <div class="form-group">
-                 <label for="phone">Telefono numeris</label>
-                 <input type="text" ngModel="{{editEmployee?.phone}}" name="phone" class="form-control" id="phone">
-              </div>
-              <div class="form-group">
-                 <label for="message">Vizito priežastis</label>
-                 <input type="text" ngModel="{{editEmployee?.message}}" name="message" class="form-control" id="message">
-              </div>
-              <div class="modal-footer">
-                 <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Atsisakyti</button>
-                 <button (click)="onUpdateEmloyee(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Patvirtinti</button>
-              </div>
-           </form>
+            <div class="form-group">
+              <label for="name">Vardas</label>
+              <input type="text" ngModel="{{editEmployee?.name}}" name="name" class="form-control"
+                     aria-describedby="emailHelp">
+            </div>
+            <input type="hidden" ngModel="{{editEmployee?.id}}" name="id" class="form-control" id="id">
+            <input type="hidden" ngModel="{{editEmployee?.employeeCode}}" name="userCode" class="form-control"
+                   id="userCode">
+            <div class="form-group">
+              <label for="surname">Pavardė</label>
+              <input type="email" ngModel="{{editEmployee?.surname}}" name="surname" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="birthday">Gimimo data</label>
+              <input type="text" ngModel="{{editEmployee?.birthday}}" name="birthday" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="phone">Telefono numeris</label>
+              <input type="text" ngModel="{{editEmployee?.phone}}" name="phone" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="message">Vizito priežastis</label>
+              <input type="text" ngModel="{{editEmployee?.message}}" name="message" class="form-control">
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Atsisakyti</button>
+              <button (click)="onUpdateEmloyee(editForm.value)" data-dismiss="modal" class="btn btn-primary">
+                Patvirtinti
+              </button>
+            </div>
+          </form>
         </div>
-     </div>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- Delete Registration Modal -->
-<div class="modal fade" id="deleteEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-     <div class="modal-content">
+  <!-- Delete Registration Modal -->
+  <div class="modal fade" id="deleteEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+       aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
         <div class="modal-header">
-           <h5 class="modal-title" id="deleteModelLabel">Registracijos panaikinimas</h5>
-           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true">&times;</span>
-           </button>
+          <h5 class="modal-title" id="deleteModelLabel">Registracijos panaikinimas</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
         </div>
         <div class="modal-body">
-           <p>Ar tikrai norite ištrinti paciento {{deleteEmployee?.name}} registraciją ?</p>
-           <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-dismiss="modal">Ne</button>
-              <button (click)="onDeleteEmloyee(deleteEmployee?.id)" class="btn btn-danger" data-dismiss="modal">Taip</button>
-           </div>
+          <p>Ar tikrai norite ištrinti paciento {{deleteEmployee?.name}} registraciją ?</p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Ne</button>
+            <button (click)="onDeleteEmloyee(deleteEmployee?.id)" class="btn btn-danger" data-dismiss="modal">Taip
+            </button>
+          </div>
         </div>
-     </div>
+      </div>
+    </div>
   </div>
-</div>
 </div>
 
 <!-- Doctor work time editing Modal -->
-<div class="modal fade" id="workTimeModal" tabindex="-1" role="dialog" aria-labelledby="workTimeModalLabel" aria-hidden="true">
+<div class="modal fade" id="workTimeModal" tabindex="-1" role="dialog" aria-labelledby="workTimeModalLabel"
+     aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="workTimeModalLabel">Gydytojo  {{editEmployee?.doctor}} užimtumas</h5>
+        <!--        <h5 class="modal-title" id="workTimeModalLabel">Gydytojų {{editEmployee?.name}} užimtumas</h5>-->
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
 
-<!--pasirenkame gydytoją-->
-          <div class="form-group">
-            <label for="doctor">Pasirinkite gydytoją iš sąrašo</label>
-            <select id="doctor" name="doctor" ngModel name ="doctor" class="form-control" multiple aria-label="multiple select example">
-              <option value="Pirmas">Pirmas Gydytojas</option>
-              <option value="Antras">Antras Gydytojas</option>
-              <option value="Trečias">Trečias Gydytojas</option>
-            </select>
+        <!--pasirenkame gydytoją-->
+        <!--          <div class="form-group">-->
+        <!--            <label for="doctor">Pasirinkite gydytoją iš sąrašo</label>-->
+        <!--            <select  ngModel name ="doctor" class="form-control">-->
+        <!--              <option value="pirmasis">Pirmas Gydytojas</option>-->
+        <!--              <option value="antrasis">Antras Gydytojas</option>-->
+        <!--              <option value="trečiasis">Trečias Gydytojas</option>-->
+        <!--            </select>-->
+        <!--          </div>-->
+
+        <div *ngFor="let employee of employees">
+          <div class="card m-b-30">
+            <div class="card-body row">
+              <div class="col-6 card-title align-self-center mb-0">
+                <h5>Gydytojas {{employee?.doctor}}</h5>
+              </div>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Data : {{employee?.date}}</li>
+              <li class="list-group-item">Laikas : {{employee?.time}}</li>
+              <!--              <li class="list-group-item">Pirmas/pakartotinis/procedura : {{employee?.purpose}}</li>-->
+              <!--              <li class="list-group-item">Vardas : {{employee?.name}}</li>-->
+              <!--              <li class="list-group-item">Pavardė: {{employee?.surname}}</li>-->
+              <!--              <li class="list-group-item">Gimimo data: {{employee?.birthday}}</li>-->
+              <!--              <li class="list-group-item">Telefonas: {{employee?.phone}}</li>-->
+              <!--              <li class="list-group-item">Kreipėsi dėl: {{employee?.message}}</li>-->
+            </ul>
+
+
+            <div class="card-body">
+              <div class="float-right btn-group btn-group-sm">
+                <a (click)="onOpenModal(employee, 'edit')" class="btn btn-primary tooltips" data-placement="top"
+                   data-original-title="Redaguoti"><i class="fa fa-pencil"></i> </a>
+                <a (click)="onOpenModal(employee, 'delete')" class="btn btn-secondary tooltips" data-placement="top"
+                   data-original-title="Ištrinti"><i class="fa fa-times"></i></a>
+              </div>
+            </div>
           </div>
-<!--          <div class="form-group">-->
-<!--            <label for="name">Gydytojas</label>-->
-<!--            <input type="text" ngModel="{{editEmployee?.doctor}}" name="doctor" class="form-control" id="doctor" name="doctor" placeholder="gydytojas">-->
-<!--          </div>-->
 
-        <form *ngFor="let employee of employees">
 
-          <div class="form-group">
-            <label for="date">Data</label>
-            <input type="text" ngModel="{{editEmployee?.date}}" name="date" class="form-control" id="date" >
-          </div>
-          <div class="form-group">
-            <label for="time">Laikas</label>
-            <input type="text" ngModel="{{editEmployee?.time}}" name="time" class="form-control" id="time" >
+          <!--        <form *ngFor="let employee of employees">-->
+          <!--&lt;!&ndash;          <form  #editForm="ngForm">&ndash;&gt;-->
+          <!--          <div class="form-group">-->
+          <!--            <label for="name">Gydytojas</label>-->
+          <!--            <input type="text" ngModel="{{editEmployee?.doctor}}" name="doctor" class="form-control">-->
+          <!--          </div>-->
 
-          </div>
-        </form>
+          <!--          <div class="form-group">-->
+          <!--            <label for="date">Data</label>-->
+          <!--            <input type="text" ngModel="{{editEmployee?.date}}" name="date" class="form-control">-->
+          <!--          </div>-->
+          <!--          <div class="form-group">-->
+          <!--            <label for="time">Laikas</label>-->
+          <!--            <input type="text" ngModel="{{editEmployee?.time}}" name="time" class="form-control">-->
+          <!--          </div>-->
+          <!--          </form>-->
 
-          <div class="modal-footer">
-            <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Uždaryti langą</button>
-            <button (click)="onUpdateEmloyee(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Išsaugoti pakeitimus</button>
-          </div>
 
+          <!--          <div class="modal-footer">-->
+          <!--            <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Uždaryti langą</button>-->
+          <!--            <button (click)="onUpdateEmloyee(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Išsaugoti pakeitimus</button>-->
+          <!--          </div>-->
+
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-
-
-<!-- No Registration Notification  -->
-<div *ngIf="employees?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
-<div class="alert alert-info" role="alert">
-  <h4 class="alert-heading">Nėra registruotų pacientų</h4>
-</div>
-</div>
+  <!-- No Registration Notification  -->
+  <div *ngIf="employees?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+    <div class="alert alert-info" role="alert">
+      <h4 class="alert-heading">Nėra registruotų pacientų</h4>
+    </div>
+  </div>
