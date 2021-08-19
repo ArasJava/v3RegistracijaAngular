@@ -126,6 +126,10 @@ export class AppComponent implements OnInit, OnDestroy{
     if (mode === 'add'){
       button.setAttribute('data-target', '#addEmployeeModal');
     }
+    if (mode === 'workTime'){
+      button.setAttribute('data-target', '#workTimeModal');
+    }
+
     if (mode === 'edit'){
       this.editEmployee = employee;
       button.setAttribute('data-target', '#updateEmployeeModal');
