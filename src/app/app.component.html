@@ -66,9 +66,9 @@
             <div class="form-group">
               <label for="doctor">Pasirinkite gydytoją iš sąrašo</label>
               <select id="doctor" name="doctor" ngModel name ="doctor" class="form-control" multiple aria-label="multiple select example">
-                          <option value="doc1">Gydytojas1</option>
-                          <option value="doc2">Gydytojas2</option>
-                          <option value="doc3">Gydytojas3</option>
+                          <option value="Pirmas">Pirmas Gydytojas</option>
+                          <option value="Antras">Antras Gydytojas</option>
+                          <option value="Trečias">Trečias Gydytojas</option>
               </select>
             </div>
 <!--  Gydytoją įvedame ranka          -->
@@ -134,42 +134,42 @@
            <form #editForm="ngForm">
              <div class="form-group">
                <label for="doctor">Gydytojas</label>
-               <input type="text" ngModel="{{editEmployee?.doctor}}" name="doctor" class="form-control" id="doctor" name="doctor" placeholder="gydytojas">
+               <input type="text" ngModel="{{editEmployee?.doctor}}" name="doctor" class="form-control" id="doctor">
              </div>
              <div class="form-group">
                <label for="date">Data</label>
-               <input type="text" ngModel="{{editEmployee?.date}}" name="date" class="form-control" id="date" name="date" placeholder="data">
+               <input type="text" ngModel="{{editEmployee?.date}}" name="date" class="form-control" id="date">
              </div>
              <div class="form-group">
                <label for="time">Laikas</label>
-               <input type="text" ngModel="{{editEmployee?.time}}" name="time" class="form-control" id="time" name="time" placeholder="laikas">
+               <input type="text" ngModel="{{editEmployee?.time}}" name="time" class="form-control" id="time">
              </div>
              <div class="form-group">
                <label for="name">Pirmas/pakartotinas/procedura</label>
-               <input type="text" ngModel="{{editEmployee?.purpose}}" name="purpose" class="form-control" id="purpose" placeholder="pirmas/pakartotinas/procedura">
+               <input type="text" ngModel="{{editEmployee?.purpose}}" name="purpose" class="form-control" id="purpose">
              </div>
 
               <div class="form-group">
                  <label for="name">Vardas</label>
-                 <input type="text" ngModel="{{editEmployee?.name}}" name="name" class="form-control" id="name" aria-describedby="emailHelp" placeholder="Name">
+                 <input type="text" ngModel="{{editEmployee?.name}}" name="name" class="form-control" id="name" aria-describedby="emailHelp">
               </div>
-              <input type="hidden" ngModel="{{editEmployee?.id}}" name="id" class="form-control" id="id" placeholder="Email">
-              <input type="hidden" ngModel="{{editEmployee?.employeeCode}}" name="userCode" class="form-control" id="userCode" placeholder="Email">
+              <input type="hidden" ngModel="{{editEmployee?.id}}" name="id" class="form-control" id="id">
+              <input type="hidden" ngModel="{{editEmployee?.employeeCode}}" name="userCode" class="form-control" id="userCode">
               <div class="form-group">
                  <label for="surname">Pavardė</label>
-                 <input type="email" ngModel="{{editEmployee?.surname}}" name="surname" class="form-control" id="surname" placeholder="pavardė">
+                 <input type="email" ngModel="{{editEmployee?.surname}}" name="surname" class="form-control" id="surname">
               </div>
               <div class="form-group">
                  <label for="birthday">Gimimo data</label>
-                 <input type="text" ngModel="{{editEmployee?.birthday}}" name="birthday" class="form-control" id="birthday" placeholder="gimtadienis">
+                 <input type="text" ngModel="{{editEmployee?.birthday}}" name="birthday" class="form-control" id="birthday">
               </div>
               <div class="form-group">
                  <label for="phone">Telefono numeris</label>
-                 <input type="text" ngModel="{{editEmployee?.phone}}" name="phone" class="form-control" id="phone" name="phone" placeholder="telefonas">
+                 <input type="text" ngModel="{{editEmployee?.phone}}" name="phone" class="form-control" id="phone">
               </div>
               <div class="form-group">
                  <label for="message">Vizito priežastis</label>
-                 <input type="text" ngModel="{{editEmployee?.message}}" name="message" class="form-control" id="message" placeholder="vizito priežastis">
+                 <input type="text" ngModel="{{editEmployee?.message}}" name="message" class="form-control" id="message">
               </div>
               <div class="modal-footer">
                  <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Atsisakyti</button>
@@ -219,9 +219,9 @@
           <div class="form-group">
             <label for="doctor">Pasirinkite gydytoją iš sąrašo</label>
             <select id="doctor" name="doctor" ngModel name ="doctor" class="form-control" multiple aria-label="multiple select example">
-              <option value="doc1">Gydytojas1</option>
-              <option value="doc2">Gydytojas2</option>
-              <option value="doc3">Gydytojas3</option>
+              <option value="Pirmas">Pirmas Gydytojas</option>
+              <option value="Antras">Antras Gydytojas</option>
+              <option value="Trečias">Trečias Gydytojas</option>
             </select>
           </div>
 <!--          <div class="form-group">-->
@@ -233,11 +233,12 @@
 
           <div class="form-group">
             <label for="date">Data</label>
-            <input type="text" ngModel="{{editEmployee?.date}}" name="date" class="form-control" id="date" name="date" placeholder="data">
+            <input type="text" ngModel="{{editEmployee?.date}}" name="date" class="form-control" id="date" >
           </div>
           <div class="form-group">
             <label for="time">Laikas</label>
-            <input type="text" ngModel="{{editEmployee?.time}}" name="time" class="form-control" id="time" name="time" placeholder="laikas">
+            <input type="text" ngModel="{{editEmployee?.time}}" name="time" class="form-control" id="time" >
+
           </div>
         </form>
 
