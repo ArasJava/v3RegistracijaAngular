@@ -62,17 +62,16 @@
        </div>
        <div class="modal-body">
           <form #addForm="ngForm" (ngSubmit)="onAddEmployee(addForm)">
-<!--Gydytoja pasirenkame is saraso-->
+<!--Gydytoją pasirenkame is sarašo-->
             <div class="form-group">
-              <label for="doctor">Gydytojas</label>
-              <select id="doctor" name="doctor" ngModel name ="doctor" class="form-control">
+              <label for="doctor">Pasirinkite gydytoją iš sąrašo</label>
+              <select id="doctor" name="doctor" ngModel name ="doctor" class="form-control" multiple aria-label="multiple select example">
                           <option value="doc1">Gydytojas1</option>
                           <option value="doc2">Gydytojas2</option>
                           <option value="doc3">Gydytojas3</option>
-
               </select>
             </div>
-<!--  Gydytoja ivedame ranka          -->
+<!--  Gydytoją įvedame ranka          -->
 <!--            <div class="form-group">-->
 <!--              <label for="doctor">Gydytojas</label>-->
 <!--              <input type="text" ngModel name="doctor" class="form-control" id="doctor" placeholder=" gydytojas" required>-->
@@ -209,17 +208,28 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="workTimeModalLabel">Gydytojo  {{editEmployee?.doctor}} laiko tinklelis</h5>
+        <h5 class="modal-title" id="workTimeModalLabel">Gydytojo  {{editEmployee?.doctor}} užimtumas</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <form *ngFor="let employee of employees">
+
+<!--pasirenkame gydytoją-->
           <div class="form-group">
-            <label for="name">Gydytojas</label>
-            <input type="text" ngModel="{{editEmployee?.doctor}}" name="doctor" class="form-control" id="doctor" name="doctor" placeholder="gydytojas">
+            <label for="doctor">Pasirinkite gydytoją iš sąrašo</label>
+            <select id="doctor" name="doctor" ngModel name ="doctor" class="form-control" multiple aria-label="multiple select example">
+              <option value="doc1">Gydytojas1</option>
+              <option value="doc2">Gydytojas2</option>
+              <option value="doc3">Gydytojas3</option>
+            </select>
           </div>
+<!--          <div class="form-group">-->
+<!--            <label for="name">Gydytojas</label>-->
+<!--            <input type="text" ngModel="{{editEmployee?.doctor}}" name="doctor" class="form-control" id="doctor" name="doctor" placeholder="gydytojas">-->
+<!--          </div>-->
+
+        <form *ngFor="let employee of employees">
 
           <div class="form-group">
             <label for="date">Data</label>
@@ -229,11 +239,11 @@
             <label for="time">Laikas</label>
             <input type="text" ngModel="{{editEmployee?.time}}" name="time" class="form-control" id="time" name="time" placeholder="laikas">
           </div>
-
         </form>
+
           <div class="modal-footer">
-            <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Atsisakyti</button>
-            <button (click)="onUpdateEmloyee(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Patvirtinti</button>
+            <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Uždaryti langą</button>
+            <button (click)="onUpdateEmloyee(editForm.value)" data-dismiss="modal" class="btn btn-primary" >Išsaugoti pakeitimus</button>
           </div>
 
       </div>
