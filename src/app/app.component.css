@@ -1,0 +1,6 @@
+/*li:hover {*/
+/*  cursor: pointer;*/
+/*}*/
+a:hover {
+  filter: brightness(0.6);
+}

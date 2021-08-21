@@ -142,4 +142,21 @@ export class AppComponent implements OnInit, OnDestroy{
     container?.appendChild(button);
     button.click();
   }
+
+  // public getDoctors(): void {
+  //   this.employeeService.getEmployees()
+  //     .pipe(
+  //       takeUntil(this.destroy$)
+  //     )
+  //     .subscribe(
+  //       (response: Employee[]) => {
+  //         this.employees = response;
+  //       },
+  //       (error: HttpErrorResponse) => {
+  //         alert(error.message);
+  //       }
+  //     )
+  // }
+
+
 }
