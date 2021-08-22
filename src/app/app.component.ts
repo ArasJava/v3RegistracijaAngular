@@ -65,6 +65,26 @@ export class AppComponent implements OnInit, OnDestroy{
     )
   }
 
+  // public onAddDoctor(addForm: NgForm): void {
+  //   document.getElementById('add-employee-form')?.click();
+  //   this.employeeService.addEmployee(addForm.value)
+  //     .pipe(
+  //       takeUntil(this.destroy$)
+  //     )
+  //     .subscribe(
+  //       (response: Employee) => {
+  //         console.log(response);
+  //         // this.getEmployees();
+  //         this.employees = [...this.employees, response]
+  //         addForm.reset();
+  //       },
+  //       (error: HttpErrorResponse) => {
+  //         alert(error.message);
+  //         addForm.reset();
+  //       }
+  //     )
+  // }
+
   public onUpdateEmloyee(employee: Employee): void {
     this.employeeService.updateEmployee(employee)
       .pipe(
@@ -126,11 +146,13 @@ export class AppComponent implements OnInit, OnDestroy{
     if (mode === 'add'){
       button.setAttribute('data-target', '#addEmployeeModal');
     }
+    if (mode === 'addDoctor'){
+      button.setAttribute('data-target', '#addDoctorModal');
+    }
     if (mode === 'workTime'){
       this.editEmployee = employee;
       button.setAttribute('data-target', '#workTimeModal');
     }
-
     if (mode === 'edit'){
       this.editEmployee = employee;
       button.setAttribute('data-target', '#updateEmployeeModal');

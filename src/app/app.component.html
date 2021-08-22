@@ -1,33 +1,25 @@
-
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" style="color:yellowgreen;">REGISTRATORĖS APLINKA</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
-           aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" xmlns="http://www.w3.org/1999/html">
+  <h2 class="navbar-brand" style="color:yellowgreen;">Užregistruoti pasientai</h2>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02"
+          data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+          aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="collapse navbar-collapse" id="navbarNavDropdown">
 
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" style="color:yellow;" (click)="onOpenModal(null, 'add')">Registruoti<span class="sr-only">(current)</span></a>
+        <a class="nav-link" style="color:yellow;" (click)="onOpenModal(null, 'add')">Registruoti naują
+          <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item active">
-        <a class="nav-link" style="color:sandybrown;"(click)="onOpenModal(null, 'workTime')">Gydytojų užimtumo peržiūra<span
-          class="sr-only">(current)</span></a>
+        <a class="nav-link" style="color:sandybrown;" (click)="onOpenModal(null, 'workTime')">Gydytojų darbo grafikai
+          <span class="sr-only">(current)</span></a>
       </li>
-<!--Gydytoju darbo tinkleli kurimas-->
-<!--      <li class="nav-item dropdown">-->
-<!--        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
-<!--          Gydytojų darbo grafikas-->
-<!--        </a>-->
-<!--        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">-->
-<!--          <li><a class="dropdown-item" href="#">Action</a></li>-->
-<!--          <li><a class="dropdown-item" href="#">Another action</a></li>-->
-<!--          <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-<!--        </ul>-->
-<!--      </li>-->
-
+      <li class="nav-item active">
+        <a class="nav-link" style="color:skyblue;" (click)="onOpenModal(null, 'addDoctor')">Pridedame gydytoją
+          <span class="sr-only">(current)</span></a>
+      </li>
     </ul>
 
     <form class="form-inline my-2 my-lg-0">
@@ -42,10 +34,8 @@
     <div *ngFor="let employee of employees" class="col-md-6 col-xl-3">
       <div class="card m-b-30">
         <div class="card-body row">
-
           <div class="col-6 card-title align-self-center mb-0">
             <h5>Gydytojas {{employee?.doctor}}</h5>
-
           </div>
         </div>
         <ul class="list-group list-group-flush">
@@ -57,7 +47,6 @@
           <li class="list-group-item">Gimimo data: {{employee?.birthday}}</li>
           <li class="list-group-item">Telefonas: {{employee?.phone}}</li>
           <li class="list-group-item">Kreipėsi dėl: {{employee?.message}}</li>
-
         </ul>
         <div class="card-body">
           <div class="float-right btn-group btn-group-sm">
@@ -85,30 +74,27 @@
         <div class="modal-body">
           <form #addForm="ngForm" (ngSubmit)="onAddEmployee(addForm)">
             <!--Gydytoją pasirenkame is sarašo HARDCODING -->
-<!--            <div class="form-group">-->
-<!--              <label for="doctor">Gydytojas (renkamės iš sąrašo) </label>-->
-<!--              <select id="doctor" ngModel name="doctor" class="form-control">-->
-<!--                <option value="pirmasis">Pirmasis Gydytojas</option>-->
-<!--                <option value="antrasis">Antrasis Gydytojas</option>-->
-<!--                <option value="trečiasis">Trečiasis Gydytojas</option>-->
-<!--              </select>-->
-<!--            </div>-->
-
+            <!--            <div class="form-group">-->
+            <!--              <label for="doctor">Gydytojas (renkamės iš sąrašo) </label>-->
+            <!--              <select id="doctor" ngModel name="doctor" class="form-control">-->
+            <!--                <option value="pirmasis">Pirmasis Gydytojas</option>-->
+            <!--                <option value="antrasis">Antrasis Gydytojas</option>-->
+            <!--                <option value="trečiasis">Trečiasis Gydytojas</option>-->
+            <!--              </select>-->
+            <!--            </div>-->
             <div class="form-group">
               <label for="doctor">Pasirinkite gydytoją iš sąrašo</label>
-              <select id="doctor" ngModel name ="doctor"  class="form-control">
+              <select id="doctor" ngModel name="doctor" class="form-control">
                 <option *ngFor="let employee of employees" [value]="[employee.doctor]">
                   {{employee?.doctor}}
                 </option>
               </select>
             </div>
-
             <!--  Gydytoją įvedame ranka          -->
             <!--            <div class="form-group">-->
             <!--              <label for="doctor">Gydytojas</label>-->
             <!--              <input type="text" ngModel name="doctor" class="form-control" id="doctor" placeholder=" gydytojas" required>-->
             <!--            </div>-->
-
             <div class="form-group">
               <label for="date">Data</label>
               <input type="text" ngModel name="date" class="form-control" id="date" placeholder="data" required>
@@ -122,7 +108,6 @@
               <input type="text" ngModel name="purpose" class="form-control" id="purpose"
                      placeholder="pirmas/pakartotinas/procedura" required>
             </div>
-
             <div class="form-group">
               <label for="name">Vardas</label>
               <input type="text" ngModel name="name" class="form-control" id="name" placeholder="vardas" required>
@@ -237,9 +222,9 @@
         <div class="modal-body">
           <p>Ar tikrai norite ištrinti paciento {{deleteEmployee?.name}} registraciją ?</p>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Ne</button>
             <button (click)="onDeleteEmloyee(deleteEmployee?.id)" class="btn btn-danger" data-dismiss="modal">Taip
             </button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Ne</button>
           </div>
         </div>
       </div>
@@ -253,64 +238,76 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-                <h5 class="modal-title" id="workTimeModalLabel">Gydytojų užimtumas</h5>
+        <h5 class="modal-title" id="workTimeModalLabel">Gydytojų užimtumas</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
 
-
-
-            <div class="form-group">
-              <label for="doctor_">Pasirinkite gydytoją iš sąrašo</label>
-              <select  ngModel name ="doctor" id="doctor_"class="form-control">
-                <option *ngFor="let employee of employees" [value]="[employee.doctor]">
-                {{employee?.doctor}}
-              </option>
-              </select>
-            </div>
-
-
-<!--          <div class="card m-b-30">-->
-<!--            <div class="card-body row">-->
-<!--              <div class="col-6 card-title align-self-center mb-0">-->
-<!--                <h5>Gydytojas {{employee?.doctor}}</h5>-->
-<!--              </div>-->
-
-
-
-<!--&lt;!&ndash;        pasirenkame gydytoją&ndash;&gt;-->
-<!--                  <div class="form-group">-->
-<!--                    <label for="doctor">Pasirinkite gydytoją iš sąrašo</label>-->
-<!--                    <select  ngModel name ="doctor" class="form-control">-->
-<!--                      <option value="pirmasis">Pirmas Gydytojas</option>-->
-<!--                      <option value="antrasis">Antras Gydytojas</option>-->
-<!--                      <option value="trečiasis">Trečias Gydytojas</option>-->
-<!--                    </select>-->
-<!--                  </div>-->
-<!--        <div *ngFor="let employee of employees">-->
-<!--          <div class="card m-b-30">-->
-<!--            <div class="card-body row">-->
-<!--              <div class="col-6 card-title align-self-center mb-0">-->
-<!--                <h5>Gydytojas {{employee?.doctor}}</h5>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <ul class="list-group list-group-flush">-->
-<!--              <li class="list-group-item">Data : {{employee?.date}}</li>-->
-<!--              <li class="list-group-item">Laikas : {{employee?.time}}</li>-->
-<!--            </ul>-->
-<!--          </div>-->
-<!--        </div>-->
+        <div class="form-group">
+          <label for="doctor_">Pasirinkite gydytoją iš sąrašo</label>
+          <select ngModel name="doctor" id="doctor_" class="form-control">
+            <option *ngFor="let employee of employees" [value]="[employee.doctor]">
+              {{employee?.doctor}}
+            </option>
+          </select>
+        </div>
 
       </div>
     </div>
   </div>
 </div>
 
-  <!-- No Registration Notification  -->
-  <div *ngIf="employees?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
-    <div class="alert alert-info" role="alert">
-      <h4 class="alert-heading">Nėra registruotų pacientų</h4>
+<!-- No Registration Notification  -->
+<div *ngIf="employees?.length == 0" class="col-lg-12 col-md-12 col-xl-12">
+  <div class="alert alert-info" role="alert">
+    <h4 class="alert-heading">Nėra registruotų pacientų</h4>
+  </div>
+</div>
+
+<!-- Add Doctor  Modal -->
+<div class="modal fade" id="addDoctorModal" tabindex="-1" role="dialog" aria-labelledby="addDoctorModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addDoctorModalLabel">Gydytojo įrašymas</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #addFormDoc="ngForm" (ngSubmit)="onAddEmployee(addFormDoc)">
+          <!--Gydytoją pasirenkame is sarašo HARDCODING -->
+          <!--            <div class="form-group">-->
+          <!--              <label for="doctor">Gydytojas (renkamės iš sąrašo) </label>-->
+          <!--              <select id="doctor" ngModel name="doctor" class="form-control">-->
+          <!--                <option value="pirmasis">Pirmasis Gydytojas</option>-->
+          <!--                <option value="antrasis">Antrasis Gydytojas</option>-->
+          <!--                <option value="trečiasis">Trečiasis Gydytojas</option>-->
+          <!--              </select>-->
+          <!--            </div>-->
+          <!--Pasirenkame gydytoja is saraso -->
+          <!--          <div class="form-group">-->
+          <!--            <label for="doctor">Pasirinkite gydytoją iš sąrašo</label>-->
+          <!--            <select id="doctor" ngModel name ="doctor"  class="form-control">-->
+          <!--              <option *ngFor="let employee of employees" [value]="[employee.doctor]">-->
+          <!--                {{employee?.doctor}}-->
+          <!--              </option>-->
+          <!--            </select>-->
+          <!--          </div>-->
+          <!--            Gydytoją įvedame rankiniu budu       -->
+          <div class="form-group">
+            <label for="doc">Gydytojas</label>
+            <input type="text" ngModel name="doctor" class="form-control" id="doc" placeholder="gydytojas"
+                   required>
+          </div>
+          <div class="modal-footer">
+            <button  [disabled]="addFormDoc.invalid" type="submit" class="btn btn-primary">Pridėti</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
+</div>
