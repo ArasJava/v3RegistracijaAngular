@@ -65,25 +65,6 @@ export class AppComponent implements OnInit, OnDestroy{
     )
   }
 
-  // public onAddDoctor(addForm: NgForm): void {
-  //   document.getElementById('add-employee-form')?.click();
-  //   this.employeeService.addEmployee(addForm.value)
-  //     .pipe(
-  //       takeUntil(this.destroy$)
-  //     )
-  //     .subscribe(
-  //       (response: Employee) => {
-  //         console.log(response);
-  //         // this.getEmployees();
-  //         this.employees = [...this.employees, response]
-  //         addForm.reset();
-  //       },
-  //       (error: HttpErrorResponse) => {
-  //         alert(error.message);
-  //         addForm.reset();
-  //       }
-  //     )
-  // }
 
   public onUpdateEmloyee(employee: Employee): void {
     this.employeeService.updateEmployee(employee)
@@ -164,21 +145,5 @@ export class AppComponent implements OnInit, OnDestroy{
     container?.appendChild(button);
     button.click();
   }
-
-  // public getDoctors(): void {
-  //   this.employeeService.getEmployees()
-  //     .pipe(
-  //       takeUntil(this.destroy$)
-  //     )
-  //     .subscribe(
-  //       (response: Employee[]) => {
-  //         this.employees = response;
-  //       },
-  //       (error: HttpErrorResponse) => {
-  //         alert(error.message);
-  //       }
-  //     )
-  // }
-
 
 }
