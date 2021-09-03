@@ -34,13 +34,14 @@
   <div class="row">
     <div *ngFor="let employee of employees" class="col-md-6 col-xl-3">
       <div class="card m-b-30">
-        <div class="card-body row">
-          <div class="col-6 card-title align-self-center mb-0">
-<!--            <h5>Gydytojas {{employee?.doctor_id}}</h5>-->
-            <h5>Gydytojas </h5>
-          </div>
-        </div>
+<!--        <div class="card-body row">-->
+<!--          <div class="col-6 card-title align-self-center mb-0">-->
+<!--            <h5>Gydytojas {{DoctorById(editDoctor.id)}}</h5>-->
+<!--            <h5>Gydytojas {{DoctorById(employee?.doctor_id)}}</h5>-->
+<!--          </div>-->
+<!--        </div>-->
         <ul class="list-group list-group-flush">
+          <li class="list-group-item">Gydytojas : {{employee?.doctor_id}}</li>
           <li class="list-group-item">Data : {{employee?.date}}</li>
           <li class="list-group-item">Laikas : {{employee?.time}}</li>
           <li class="list-group-item">Pirmas/pakartotinis/procedura : {{employee?.purpose}}</li>
@@ -470,16 +471,7 @@
       </div>
       <div class="modal-body">
         <form #addFormDoc="ngForm" (ngSubmit)="onAddDoctor(addFormDoc)">
-          <!--Pasirenkame gydytoja is saraso -->
-          <!--          <div class="form-group">-->
-          <!--            <label for="doctor">Pasirinkite gydytoją iš sąrašo</label>-->
-          <!--            <select id="doctor" ngModel name ="doctor"  class="form-control">-->
-          <!--              <option *ngFor="let employee of employees" [value]="[employee.doctor]">-->
-          <!--                {{employee?.doctor}}-->
-          <!--              </option>-->
-          <!--            </select>-->
-          <!--          </div>-->
-          <!--            Gydytoją įvedame rankiniu budu       -->
+
           <div class="form-group">
             <label for="doctorName">Gydytojo vardas</label>
             <input type="text" ngModel name="doctorName" class="form-control" id="doctorName" placeholder="vardas"

@@ -166,7 +166,7 @@ export class AppComponent implements OnInit, OnDestroy{
       .subscribe(
         (response: Doctor) => {
           console.log(response);
-          // this.getEmployees();
+          // this.getDoctor();
           this.doctors = [...this.doctors, response]
           addForm.reset();
         },
@@ -200,7 +200,23 @@ export class AppComponent implements OnInit, OnDestroy{
         (response: Doctor) => {
           console.log(response);
           // this.getEmployees();
-          this.doctors = this.doctors.map((empl)=> empl.id === response.id ? response : empl)
+          this.doctors = this.doctors.map((doc)=> doc.id === response.id ? response : doc)
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+  }
+
+  public DoctorById(doctorID: number): void {
+    this.employeeService.getDoctorById(doctorID)
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (response: Doctor) => {
+          console.log(response);
+          this.doctors = this.doctors.map((doc)=> doc.id === response.id ? response : doc)
         },
         (error: HttpErrorResponse) => {
           alert(error.message);
