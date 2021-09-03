@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
 import { EmployeeService } from './employee.service';
+import {DoctorService} from "./doctor.service";
 
 @NgModule({
   declarations: [

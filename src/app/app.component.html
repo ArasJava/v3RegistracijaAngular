@@ -9,15 +9,15 @@
 
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" style="color:yellow;" (click)="onOpenModal(null, 'add')">Registruoti pacientą
+        <a class="nav-link" style="color:yellow;" (click)="onOpenModal(null, 'add')">Nauja paciento registracija
           <span class="sr-only">(current)</span></a>
       </li>
+<!--      <li class="nav-item active">-->
+<!--        <a class="nav-link" style="color:sandybrown;" (click)="onOpenModal(null, 'workTime')">Gydytojų darbo grafikai-->
+<!--          <span class="sr-only">(current)</span></a>-->
+<!--      </li>-->
       <li class="nav-item active">
-        <a class="nav-link" style="color:sandybrown;" (click)="onOpenModal(null, 'workTime')">Gydytojų darbo grafikai
-          <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" style="color:skyblue;" (click)="onOpenModal(null, 'addDoctor')">Pridedame naują gydytoją
+        <a class="nav-link" style="color:skyblue;" (click)="onOpenModal(null, 'addDoctor')">Prideti gydytoją
           <span class="sr-only">(current)</span></a>
       </li>
     </ul>
@@ -29,13 +29,15 @@
   </div>
 </nav>
 
+<!--Lentele (registraciju) pod navbar'u-->
 <div class="container" id="main-container">
   <div class="row">
     <div *ngFor="let employee of employees" class="col-md-6 col-xl-3">
       <div class="card m-b-30">
         <div class="card-body row">
           <div class="col-6 card-title align-self-center mb-0">
-            <h5>Gydytojas {{employee?.doctor}}</h5>
+<!--            <h5>Gydytojas {{employee?.doctor_id}}</h5>-->
+            <h5>Gydytojas </h5>
           </div>
         </div>
         <ul class="list-group list-group-flush">
@@ -66,35 +68,26 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="addEmployeeModalLabel">Nauja registracija</h5>
+          <h5 class="modal-title" id="addEmployeeModalLabel">Nauja paciento registracija</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <form #addForm="ngForm" (ngSubmit)="onAddEmployee(addForm)">
-            <!--Gydytoją pasirenkame is sarašo HARDCODING -->
-            <!--            <div class="form-group">-->
-            <!--              <label for="doctor">Gydytojas (renkamės iš sąrašo) </label>-->
-            <!--              <select id="doctor" ngModel name="doctor" class="form-control">-->
-            <!--                <option value="pirmasis">Pirmasis Gydytojas</option>-->
-            <!--                <option value="antrasis">Antrasis Gydytojas</option>-->
-            <!--                <option value="trečiasis">Trečiasis Gydytojas</option>-->
-            <!--              </select>-->
-            <!--            </div>-->
-            <div class="form-select">
-              <label for="doctor">Pasirinkite gydytoją iš sąrašo</label>
-              <select id="doctor" ngModel name="doctor" class="form-control">
-                <option *ngFor="let employee of employees" [value]="[employee.doctor]">
-                  {{employee?.doctor}}
+
+              <label for="doctor_id">Pasirinkite gydytoją iš sąrašo</label>
+              <select id="doctor_id" ngModel name="doctor_id" class="form-control" multiple aria-label="multiple select example">
+                <option *ngFor="let doctor of doctors" [value]="[doctor.id]">
+                  {{doctor.doctorName}}  {{doctor.doctorSurname}}  {{doctor.doctorSpecialization}} {{doctor.id}}
                 </option>
               </select>
-            </div>
-            <!--  Gydytoją įvedame ranka          -->
-            <!--            <div class="form-group">-->
-            <!--              <label for="doctor">Gydytojas</label>-->
-            <!--              <input type="text" ngModel name="doctor" class="form-control" id="doctor" placeholder=" gydytojas" required>-->
-            <!--            </div>-->
+
+<!--&lt;!&ndash;              Gydytoją įvedame ranka          &ndash;&gt;-->
+<!--                        <div class="form-group">-->
+<!--                          <label for="doctor_id">Gydytojas</label>-->
+<!--                          <input type="text" ngModel name="doctor_id" class="form-control" id="doctor_id" placeholder=" gydytojas" required>-->
+<!--                        </div>-->
             <div class="form-group">
               <label for="date">Data</label>
               <input type="text" ngModel name="date" class="form-control" id="date" placeholder="data" required>
@@ -148,7 +141,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="updateEmployeeModalLabel">Redaguojame {{editEmployee?.name}} pasirinkimą</h5>
+          <h5 class="modal-title" id="updateEmployeeModalLabel">Redaguojame {{editDoctor?.doctorName}} pasirinkimą</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -156,8 +149,8 @@
         <div class="modal-body">
           <form #editForm="ngForm">
             <div class="form-group">
-              <label for="doctor">Gydytojas</label>
-              <input type="text" ngModel="{{editEmployee?.doctor}}" name="doctor" class="form-control">
+              <label for="doctor_id">Gydytojas</label>
+              <input type="text" ngModel="{{editEmployee?.doctor_id}}" name="doctor_id" class="form-control">
             </div>
             <div class="form-group">
               <label for="date">Data</label>
@@ -246,206 +239,206 @@
       <div class="modal-body">
 
         <div class="form-group">
-          <label for="doctor_">Pasirinkite gydytoją iš sąrašo</label>
-          <select ngModel name="doctor" id="doctor_" class="form-control" multiple aria-label="multiple select example">
-            <option *ngFor="let employee of employees" [value]="[employee.doctor]">
-              {{employee?.doctor}}
+          <label for="doctorSel">Pasirinkite gydytoją iš sąrašo</label>
+          <select ngModel name="doctorSel" id="doctorSel" class="form-control" multiple aria-label="multiple select example">
+            <option *ngFor="let doctor of doctors" [value]="[doctor.id]">
+              {{doctor?.doctorName}}  {{doctor?.doctorSurname}}  {{doctor?.doctorSpecialization}}
             </option>
           </select>
         </div>
 
+<!--Savaites gydytojo laisvu laiku lentele-->
+<!--        <div class="container">-->
+<!--          <div class="timetable-img text-center">-->
+<!--            <img src="img/content/timetable.png" alt="">-->
+<!--          </div>-->
+<!--          <div class="table-responsive">-->
+<!--            <table class="table table-bordered text-center">-->
+<!--              <thead>-->
+<!--              <tr class="bg-light-gray">-->
+<!--                <th class="text-uppercase">Laikas-->
+<!--                </th>-->
+<!--                <th class="text-uppercase">Pirmadienis</th>-->
+<!--                <th class="text-uppercase">Antradienis</th>-->
+<!--                <th class="text-uppercase">Treciadienis</th>-->
+<!--                <th class="text-uppercase">Ketvirtadienis</th>-->
+<!--                <th class="text-uppercase">Penktadienis</th>-->
+<!--              </tr>-->
+<!--              </thead>-->
+<!--              <tbody>-->
+<!--              <tr>-->
+<!--                <td class="align-middle">8:00-09:00</td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="8pirmadienis9">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="8sntradienis9">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="8treciadienis9">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="8ketvirtadienis9">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="8penktadienis9">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--              </tr>-->
 
-        <div class="container">
-          <div class="timetable-img text-center">
-            <img src="img/content/timetable.png" alt="">
-          </div>
-          <div class="table-responsive">
-            <table class="table table-bordered text-center">
-              <thead>
-              <tr class="bg-light-gray">
-                <th class="text-uppercase">Laikas
-                </th>
-                <th class="text-uppercase">Pirmadienis</th>
-                <th class="text-uppercase">Antradienis</th>
-                <th class="text-uppercase">Treciadienis</th>
-                <th class="text-uppercase">Ketvirtadienis</th>
-                <th class="text-uppercase">Penktadienis</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td class="align-middle">8:00-09:00</td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="8pirmadienis9">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-              </tr>
+<!--              <tr>-->
+<!--                <td class="align-middle">9:00-10:00</td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="9pirmadienis10">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                <div class="form-check form-switch">-->
+<!--                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                  <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--              </tr>-->
 
-              <tr>
-                <td class="align-middle">9:00-10:00</td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                  <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-              </tr>
+<!--              <tr>-->
+<!--                <td class="align-middle">10:00-11:00</td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--              </tr>-->
 
-              <tr>
-                <td class="align-middle">10:00-11:00</td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-              </tr>
+<!--              <tr>-->
+<!--                <td class="align-middle">11:00-12:00</td>-->
+<!--                <td>-->
+<!--                <div class="form-check form-switch">-->
+<!--                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                  <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                <div class="form-check form-switch">-->
+<!--                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                  <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                </div>-->
+<!--                </td>-->
+<!--              </tr>-->
 
-              <tr>
-                <td class="align-middle">11:00-12:00</td>
-                <td>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                  <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                  <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td class="align-middle">12:00-13:00</td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                  <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
+<!--              <tr>-->
+<!--                <td class="align-middle">12:00-13:00</td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                <div class="form-check form-switch">-->
+<!--                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                  <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                  <div class="form-check form-switch">-->
+<!--                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">-->
+<!--                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>-->
+<!--                  </div>-->
+<!--                </td>-->
+<!--              </tr>-->
+<!--              </tbody>-->
+<!--            </table>-->
+<!--          </div>-->
+<!--        </div>-->
 
 
 
@@ -476,16 +469,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <form #addFormDoc="ngForm" (ngSubmit)="onAddEmployee(addFormDoc)">
-          <!--Gydytoją pasirenkame is sarašo HARDCODING -->
-          <!--            <div class="form-group">-->
-          <!--              <label for="doctor">Gydytojas (renkamės iš sąrašo) </label>-->
-          <!--              <select id="doctor" ngModel name="doctor" class="form-control">-->
-          <!--                <option value="pirmasis">Pirmasis Gydytojas</option>-->
-          <!--                <option value="antrasis">Antrasis Gydytojas</option>-->
-          <!--                <option value="trečiasis">Trečiasis Gydytojas</option>-->
-          <!--              </select>-->
-          <!--            </div>-->
+        <form #addFormDoc="ngForm" (ngSubmit)="onAddDoctor(addFormDoc)">
           <!--Pasirenkame gydytoja is saraso -->
           <!--          <div class="form-group">-->
           <!--            <label for="doctor">Pasirinkite gydytoją iš sąrašo</label>-->
@@ -497,8 +481,18 @@
           <!--          </div>-->
           <!--            Gydytoją įvedame rankiniu budu       -->
           <div class="form-group">
-            <label for="doc">Gydytojas</label>
-            <input type="text" ngModel name="doctor" class="form-control" id="doc" placeholder="gydytojas"
+            <label for="doctorName">Gydytojo vardas</label>
+            <input type="text" ngModel name="doctorName" class="form-control" id="doctorName" placeholder="vardas"
+                   required>
+          </div>
+          <div class="form-group">
+            <label for="doctorSurname">Gydytojo pavardė</label>
+            <input type="text" ngModel name="doctorSurname" class="form-control" id="doctorSurname" placeholder="pavardė"
+                   required>
+          </div>
+          <div class="form-group">
+            <label for="doctorSpecialization">Gydytojo specializacija</label>
+            <input type="text" ngModel name="doctorSpecialization" class="form-control" id="doctorSpecialization" placeholder=" specializacija"
                    required>
           </div>
           <div class="modal-footer">
@@ -516,10 +510,6 @@
 <!--  <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">-->
 <!--    <div class="modal-dialog modal-lg">-->
 <!--      <div class="modal-content">-->
-
-
-
-
 
 <!--      </div>-->
 <!--    </div>-->

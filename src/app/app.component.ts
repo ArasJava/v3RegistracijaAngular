@@ -2,9 +2,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Employee } from './employee';
+import {Doctor} from "./doctor";
 import { EmployeeService } from './employee.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import {DoctorService} from "./doctor.service";
 
 @Component({
   selector: 'app-root',
@@ -18,11 +20,18 @@ export class AppComponent implements OnInit, OnDestroy{
   public employees?: Employee[] | undefined;
   public editEmployee?: Employee;
   public deleteEmployee?: Employee;
+
+  public doctors?: Doctor[] | undefined;
+  public editDoctor?: Doctor;
+  public deleteDoctor?: Doctor;
+
   private destroy$ = new Subject();
   constructor(private employeeService: EmployeeService) { }
 
+
   ngOnInit() {
     this.getEmployees();
+    this.getDoctors();
   }
 
   ngOnDestroy() {
@@ -131,19 +140,72 @@ export class AppComponent implements OnInit, OnDestroy{
       button.setAttribute('data-target', '#addDoctorModal');
     }
     if (mode === 'workTime'){
-      this.editEmployee = employee;
+      // this.editEmployee = employee;
       button.setAttribute('data-target', '#workTimeModal');
     }
     if (mode === 'edit'){
       this.editEmployee = employee;
+      // this.editDoctor = doctor;
       button.setAttribute('data-target', '#updateEmployeeModal');
     }
+
     if (mode === 'delete'){
       this.deleteEmployee = employee;
       button.setAttribute('data-target', '#deleteEmployeeModal');
     }
     container?.appendChild(button);
     button.click();
+  }
+  // DOCTOR
+  public onAddDoctor(addForm: NgForm): void {
+    document.getElementById('add-doctor-form')?.click();
+    this.employeeService.addDoctor(addForm.value)
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (response: Doctor) => {
+          console.log(response);
+          // this.getEmployees();
+          this.doctors = [...this.doctors, response]
+          addForm.reset();
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+          addForm.reset();
+        }
+      )
+  }
+  public getDoctors(): void {
+    this.employeeService.getDoctors()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (response: Doctor[]) => {
+          this.doctors = response;
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      )
+  }
+
+  public onUpdateDoctor(doctor: Doctor): void {
+    this.employeeService.updateDoctor(doctor)
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (response: Doctor) => {
+          console.log(response);
+          // this.getEmployees();
+          this.doctors = this.doctors.map((empl)=> empl.id === response.id ? response : empl)
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
   }
 
 }
