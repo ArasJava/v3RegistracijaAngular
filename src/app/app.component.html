@@ -78,8 +78,8 @@
           <form #addForm="ngForm" (ngSubmit)="onAddEmployee(addForm)">
 
               <label for="doctor_id">Pasirinkite gydytoją iš sąrašo</label>
-              <select id="doctor_id" ngModel name="doctor_id" class="form-control" multiple aria-label="multiple select example">
-                <option *ngFor="let doctor of doctors" [value]="[doctor.id]">
+              <select id="doctor_id" ngModel name="doctor_id" class="form-control" multiple aria-label="multiple select example" required>
+                <option *ngFor="let doctor of doctors"  [ngValue] ="[8]" >
                   {{doctor.doctorName}}  {{doctor.doctorSurname}}  {{doctor.doctorSpecialization}} {{doctor.id}}
                 </option>
               </select>
