@@ -41,6 +41,7 @@
 <!--          </div>-->
 <!--        </div>-->
         <ul class="list-group list-group-flush">
+<!--          <li class="list-group-item">Gydytojas : {{onGetDoctorById(9)}}</li>-->
           <li class="list-group-item">Gydytojas : {{employee?.doctor_id}}</li>
           <li class="list-group-item">Data : {{employee?.date}}</li>
           <li class="list-group-item">Laikas : {{employee?.time}}</li>
@@ -77,18 +78,18 @@
         <div class="modal-body">
           <form #addForm="ngForm" (ngSubmit)="onAddEmployee(addForm)">
 
-              <label for="doctor_id">Pasirinkite gydytoją iš sąrašo</label>
-              <select id="doctor_id" ngModel name="doctor_id" class="form-control" multiple aria-label="multiple select example" required>
-                <option *ngFor="let doctor of doctors"  [ngValue] ="[8]" >
-                  {{doctor.doctorName}}  {{doctor.doctorSurname}}  {{doctor.doctorSpecialization}} {{doctor.id}}
+              <label for="doctor_id">Gydytojų sąrašas su skaičiais</label>
+              <select id="doctorid" ngModel name="doctor_id" class="form-control" multiple aria-label="multiple select example" >
+                <option value ="{{doctor.id | number}}" *ngFor="let doctor of doctors"  >
+                  {{doctor.id}} - {{doctor.doctorName}}  {{doctor.doctorSurname}} - {{doctor.doctorSpecialization}}
                 </option>
               </select>
 
-<!--&lt;!&ndash;              Gydytoją įvedame ranka          &ndash;&gt;-->
-<!--                        <div class="form-group">-->
-<!--                          <label for="doctor_id">Gydytojas</label>-->
-<!--                          <input type="text" ngModel name="doctor_id" class="form-control" id="doctor_id" placeholder=" gydytojas" required>-->
-<!--                        </div>-->
+<!--              Gydytoją įvedame ranka          -->
+                        <div class="form-group">
+                          <label for="doctor_id">Įrašykite TIK skaičių esantį prie gydytojo pavardės </label>
+                          <input type="text" ngModel name="doctor_id" class="form-control" id="doctor_id" placeholder="skaičius" required>
+                        </div>
             <div class="form-group">
               <label for="date">Data</label>
               <input type="text" ngModel name="date" class="form-control" id="date" placeholder="data" required>
@@ -469,6 +470,17 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+
+      <h5>Esami gydytojai:</h5>
+      <div class="container">
+        <div *ngFor="let doctor of doctors" >
+          <td>  {{doctor.id }} </td>
+          <td> _  {{doctor.doctorName }} </td>
+          <td> _  {{doctor.doctorSurname }} </td>
+          <td> _  {{doctor.doctorSpecialization }} </td>
+        </div>
+      </div>
+
       <div class="modal-body">
         <form #addFormDoc="ngForm" (ngSubmit)="onAddDoctor(addFormDoc)">
 
@@ -488,6 +500,8 @@
                    required>
           </div>
           <div class="modal-footer">
+            <button type="button" id="add-doc-form" class="btn btn-secondary" data-dismiss="modal">Atsisakyti
+            </button>
             <button [disabled]="addFormDoc.invalid" type="submit" class="btn btn-primary">Pridėti</button>
           </div>
         </form>

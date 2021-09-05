@@ -158,7 +158,7 @@ export class AppComponent implements OnInit, OnDestroy{
   }
   // DOCTOR
   public onAddDoctor(addForm: NgForm): void {
-    document.getElementById('add-doctor-form')?.click();
+    document.getElementById('add-doc-form')?.click();
     this.employeeService.addDoctor(addForm.value)
       .pipe(
         takeUntil(this.destroy$)
@@ -208,7 +208,7 @@ export class AppComponent implements OnInit, OnDestroy{
       );
   }
 
-  public DoctorById(doctorID: number): void {
+  public onGetDoctorById(doctorID: number): void {
     this.employeeService.getDoctorById(doctorID)
       .pipe(
         takeUntil(this.destroy$)
@@ -216,7 +216,7 @@ export class AppComponent implements OnInit, OnDestroy{
       .subscribe(
         (response: Doctor) => {
           console.log(response);
-          this.doctors = this.doctors.map((doc)=> doc.id === response.id ? response : doc)
+          this.doctors = this.doctors.filter((doc)=> doc.id === response.id ? response : doc)
         },
         (error: HttpErrorResponse) => {
           alert(error.message);
