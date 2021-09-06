@@ -155,6 +155,10 @@ export class AppComponent implements OnInit, OnDestroy{
       this.deleteEmployee = employee;
       button.setAttribute('data-target', '#deleteEmployeeModal');
     }
+    // if (mode === 'deleteDoctor'){
+    //   this.deleteDoctor = doctor;
+    //   button.setAttribute('data-target', '#deleteDoctorModal');
+    // }
     container?.appendChild(button);
     button.click();
   }
@@ -219,6 +223,23 @@ export class AppComponent implements OnInit, OnDestroy{
         (response: Doctor) => {
           console.log(response);
           this.doctors = this.doctors.filter((doc)=> doc.id === response.id ? response : doc)
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+  }
+
+  public onDeleteDoctor(doctorId: number): void {
+    console.log(doctorId)
+    this.employeeService.deleteDoctor(doctorId)
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (response: void) => {
+          console.log(response);
+          this.doctors = this.doctors.filter((doctor)=> doctor.id !== doctorId)
         },
         (error: HttpErrorResponse) => {
           alert(error.message);

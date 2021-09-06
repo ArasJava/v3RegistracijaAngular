@@ -41,7 +41,7 @@
             <div *ngFor="let doctor of doctors" >
               <ng-template [ngIf]= "doctor.id == employee?.doctor_id" >
                 <div>
-                  <!--                <td>   {{doctor.id }} </td>-->
+                                  <td>   {{doctor.id }} </td>
                   <td> {{doctor.doctorName }} </td>
                   <td> &nbsp; {{doctor.doctorSurname }} </td>
                   <td> - {{doctor.doctorSpecialization }} </td>
@@ -52,7 +52,7 @@
            </li>
           <li class="list-group-item">Data : {{employee?.date}}</li>
           <li class="list-group-item">Laikas : {{employee?.time}}</li>
-          <li class="list-group-item">Pirmas/pakartotinis/procedura : {{employee?.purpose}}</li>
+          <li class="list-group-item">Tai vizitas: {{employee?.purpose}}</li>
           <li class="list-group-item">Vardas : {{employee?.name}}</li>
           <li class="list-group-item">Pavardė: {{employee?.surname}}</li>
           <li class="list-group-item">Gimimo data: {{employee?.birthday}}</li>
@@ -86,7 +86,7 @@
           <form #addForm="ngForm" (ngSubmit)="onAddEmployee(addForm)">
             <div class="form-group">
               <label for="doctor">Gydytojų sąrašas :</label>
-              <select id="doctor" ngModel name="doctor_id" class="form-control" multiple aria-label="multiple select example" disabled >
+              <select id="doctor" ngModel name="doctor" class="form-control" multiple aria-label="multiple select example" disabled >
 
 <!--                <select id="doctor_id" ngModel name = "doctor_id"  class="form-control" [(ngModel)] ="docId" multiple aria-label="doctor_id" required>-->
 
@@ -113,9 +113,9 @@
               <input type="text" ngModel name="time" class="form-control" id="time" placeholder="laikas" required>
             </div>
             <div class="form-group">
-              <label for="purpose">Pirmas/pakartotinas/procedura</label>
+              <label for="purpose">Koks tai vizitas? ar pirmas ar pakartotinas ar procedūra</label>
               <input type="text" ngModel name="purpose" class="form-control" id="purpose"
-                     placeholder="pirmas/pakartotinas/procedura" required>
+                     placeholder="įrašykite vieną žodį:  pirmas, pakartotinas arba procedura" required>
             </div>
             <div class="form-group">
               <label for="name">Vardas</label>
@@ -163,6 +163,16 @@
           </button>
         </div>
         <div class="modal-body">
+
+          <div class="form-group">
+            <label for="doctorEdit">Gydytojų sąrašas :</label>
+            <select id="doctorEdit" ngModel name="doctor_id" class="form-control" multiple aria-label="multiple select example" disabled >
+              <option value="{{doctor.id}}" *ngFor="let doctor of doctors" >
+                {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}} - {{doctor.doctorSpecialization}}
+              </option>
+            </select>
+          </div>
+
           <form #editForm="ngForm">
             <div class="form-group">
               <label for="doctor_id">Gydytojas</label>
@@ -488,10 +498,13 @@
       <p ><b>&emsp;Klinikoje dirbantys gydytojai:</b></p>
       <div class="container">
         <div *ngFor="let doctor of doctors" >
-<!--          <td>  {{doctor.id }} </td>-->
+          <td>  {{doctor.id }} </td>
           <td>   {{doctor.doctorName }} </td>
           <td> &nbsp;  {{doctor.doctorSurname }} </td>
           <td> &ensp; , {{doctor.doctorSpecialization }} </td>
+          <button (click)="onDeleteDoctor(doctor.id)" type="submit" class="btn btn-danger">Ištrinti</button>
+<!--          <a (click)="onOpenModal(doctor, 'deleteDoctor')" class="btn btn-danger tooltips" data-placement="top"-->
+<!--             data-original-title="Ištrinti"><i class="fa fa-times"></i></a>-->
         </div>
       </div>
 
