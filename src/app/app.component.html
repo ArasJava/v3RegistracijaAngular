@@ -34,15 +34,22 @@
   <div class="row">
     <div *ngFor="let employee of employees" class="col-md-6 col-xl-3">
       <div class="card m-b-30">
-<!--        <div class="card-body row">-->
-<!--          <div class="col-6 card-title align-self-center mb-0">-->
-<!--            <h5>Gydytojas {{DoctorById(editDoctor.id)}}</h5>-->
-<!--            <h5>Gydytojas {{DoctorById(employee?.doctor_id)}}</h5>-->
-<!--          </div>-->
-<!--        </div>-->
+
         <ul class="list-group list-group-flush">
-<!--          <li class="list-group-item">Gydytojas : {{onGetDoctorById(9)}}</li>-->
-          <li class="list-group-item">Gydytojas : {{employee?.doctor_id}}</li>
+
+          <li class="list-group-item">Gydytojas :
+            <div *ngFor="let doctor of doctors" >
+              <ng-template [ngIf]= "doctor.id == employee?.doctor_id" >
+                <div>
+                  <!--                <td>   {{doctor.id }} </td>-->
+                  <td> {{doctor.doctorName }} </td>
+                  <td> &nbsp; {{doctor.doctorSurname }} </td>
+                  <td> - {{doctor.doctorSpecialization }} </td>
+                </div>
+              </ng-template>
+            </div>
+
+           </li>
           <li class="list-group-item">Data : {{employee?.date}}</li>
           <li class="list-group-item">Laikas : {{employee?.time}}</li>
           <li class="list-group-item">Pirmas/pakartotinis/procedura : {{employee?.purpose}}</li>
@@ -77,19 +84,26 @@
         </div>
         <div class="modal-body">
           <form #addForm="ngForm" (ngSubmit)="onAddEmployee(addForm)">
+            <div class="form-group">
+              <label for="doctor">Gydytojų sąrašas :</label>
+              <select id="doctor" ngModel name="doctor_id" class="form-control" multiple aria-label="multiple select example" disabled >
 
-              <label for="doctor_id">Gydytojų sąrašas su skaičiais</label>
-              <select id="doctorid" ngModel name="doctor_id" class="form-control" multiple aria-label="multiple select example" >
-                <option value ="{{doctor.id | number}}" *ngFor="let doctor of doctors"  >
-                  {{doctor.id}} - {{doctor.doctorName}}  {{doctor.doctorSurname}} - {{doctor.doctorSpecialization}}
+<!--                <select id="doctor_id" ngModel name = "doctor_id"  class="form-control" [(ngModel)] ="docId" multiple aria-label="doctor_id" required>-->
+
+                <option value="{{doctor.id}}" *ngFor="let doctor of doctors" >
+                  {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}} - {{doctor.doctorSpecialization}}
                 </option>
               </select>
+            </div>
+
+<!-- su ng model           <p>{{docId}}</p>-->
 
 <!--              Gydytoją įvedame ranka          -->
                         <div class="form-group">
-                          <label for="doctor_id">Įrašykite TIK skaičių esantį prie gydytojo pavardės </label>
+                          <label for="doctor_id">Tereikia įvesti skaičių esantį prieš gydytojo vardą </label>
                           <input type="text" ngModel name="doctor_id" class="form-control" id="doctor_id" placeholder="skaičius" required>
                         </div>
+
             <div class="form-group">
               <label for="date">Data</label>
               <input type="text" ngModel name="date" class="form-control" id="date" placeholder="data" required>
@@ -465,19 +479,19 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addDoctorModalLabel">Gydytojo įrašymas</h5>
+        <h5 class="modal-title" id="addDoctorModalLabel">Naujo gydytojo įrašymas</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
 
-      <h5>Esami gydytojai:</h5>
+      <p ><b>&emsp;Klinikoje dirbantys gydytojai:</b></p>
       <div class="container">
         <div *ngFor="let doctor of doctors" >
-          <td>  {{doctor.id }} </td>
-          <td> _  {{doctor.doctorName }} </td>
-          <td> _  {{doctor.doctorSurname }} </td>
-          <td> _  {{doctor.doctorSpecialization }} </td>
+<!--          <td>  {{doctor.id }} </td>-->
+          <td>   {{doctor.doctorName }} </td>
+          <td> &nbsp;  {{doctor.doctorSurname }} </td>
+          <td> &ensp; , {{doctor.doctorSpecialization }} </td>
         </div>
       </div>
 

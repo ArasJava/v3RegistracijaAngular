@@ -21,6 +21,8 @@ export class AppComponent implements OnInit, OnDestroy{
   public editEmployee?: Employee;
   public deleteEmployee?: Employee;
 
+  public doctor: Doctor[] ;
+  public docId: number;
   public doctors?: Doctor[] | undefined;
   public editDoctor?: Doctor;
   public deleteDoctor?: Doctor;
@@ -222,6 +224,10 @@ export class AppComponent implements OnInit, OnDestroy{
           alert(error.message);
         }
       );
+  }
+
+  onChangeSelect(doctor_id : number):void{
+    console.log(doctor_id);
   }
 
 }
