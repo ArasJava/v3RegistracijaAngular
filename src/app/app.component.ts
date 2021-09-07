@@ -7,6 +7,7 @@ import { EmployeeService } from './employee.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import {DoctorService} from "./doctor.service";
+import {WeekTable} from "./weekTable";
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,12 @@ export class AppComponent implements OnInit, OnDestroy{
   public editDoctor?: Doctor;
   public deleteDoctor?: Doctor;
 
+  public weekTable: WeekTable[] ;
+  public weekTables?: WeekTable[] | undefined;
+  public editWeekTable?: WeekTable;
+  public deleteWeekTable?: WeekTable;
+
+
   private destroy$ = new Subject();
   constructor(private employeeService: EmployeeService) { }
 
@@ -34,6 +41,7 @@ export class AppComponent implements OnInit, OnDestroy{
   ngOnInit() {
     this.getEmployees();
     this.getDoctors();
+    this.getWeekTables();
   }
 
   ngOnDestroy() {
@@ -246,6 +254,25 @@ export class AppComponent implements OnInit, OnDestroy{
         }
       );
   }
+
+  public getWeekTables(): void {
+    this.employeeService.getWeekTables()
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (response: WeekTable[]) => {
+          this.weekTable = response;
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      )
+  }
+
+
+
+
 
   onChangeSelect(doctor_id : number):void{
     console.log(doctor_id);

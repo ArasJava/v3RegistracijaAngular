@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Employee } from './employee';
 import { environment } from 'src/environments/environment';
 import {Doctor} from "./doctor";
-
+import {WeekTable} from "./weekTable";
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +53,26 @@ export class EmployeeService {
     return this.httpClient.delete<void>(`${this.baseURL}/doctor/delete/${doctorId}`);
   }
 
+// WeekTable servisai
+  public getWeekTables(): Observable<WeekTable[]>{
+    return this.httpClient.get<WeekTable[]>(`${this.baseURL}/weekTable/all`);
+  }
 
+  public getWeekTableById(weekTableId: number): Observable<WeekTable>{
+    return this.httpClient.get<WeekTable>(`${this.baseURL}/weekTable/find/${weekTableId}`);
+  }
+
+  public addWeekTable(weekTable: WeekTable): Observable<WeekTable>{
+    return this.httpClient.post<WeekTable>(`${this.baseURL}/weekTable/add`, weekTable);
+  }
+
+  public updateWeekTable(weekTable: Doctor): Observable<Doctor>{
+    return this.httpClient.put<Doctor>(`${this.baseURL}/weekTable/update`, weekTable);
+  }
+
+  public deleteWeekTable(weekTableId: number): Observable<void>{
+    return this.httpClient.delete<void>(`${this.baseURL}/weekTable/delete/${weekTableId}`);
+  }
 
 
 

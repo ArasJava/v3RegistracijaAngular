@@ -1,7 +1,6 @@
 export interface Employee {
     id: number;
     doctor_id: number;
-    // doctor: string;
     date: string;
     time: string;
     purpose: string;
