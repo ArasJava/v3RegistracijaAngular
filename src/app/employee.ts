@@ -1,8 +1,8 @@
 export interface Employee {
     id: number;
     doctor_id: number;
-    date: string;
-    time: string;
+    day_id: number;
+    time_id: number;
     purpose: string;
     name: string;
     surname: string;

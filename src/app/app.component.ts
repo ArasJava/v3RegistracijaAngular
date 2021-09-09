@@ -28,7 +28,8 @@ export class AppComponent implements OnInit, OnDestroy{
   public editDoctor?: Doctor;
   public deleteDoctor?: Doctor;
 
-  public weekTable: WeekTable[] ;
+
+  public weekTable: WeekTable ;
   public weekTables?: WeekTable[] | undefined;
   public editWeekTable?: WeekTable;
   public deleteWeekTable?: WeekTable;
@@ -43,6 +44,18 @@ export class AppComponent implements OnInit, OnDestroy{
     this.getDoctors();
     this.getWeekTables();
   }
+    // setDefaults() {
+    //   this.weekTable = {
+    //     id:1,
+    //     doctor_id: 14,
+    //     timeStartId: 8,
+    //     monday: true,
+    //     tuesday: true,
+    //     wednesday: true,
+    //     thursday: true,
+    //     friday: true
+    //   };
+    // }
 
   ngOnDestroy() {
     this.destroy$.next();
@@ -155,7 +168,6 @@ export class AppComponent implements OnInit, OnDestroy{
     }
     if (mode === 'edit'){
       this.editEmployee = employee;
-      // this.editDoctor = doctor;
       button.setAttribute('data-target', '#updateEmployeeModal');
     }
 
@@ -163,10 +175,18 @@ export class AppComponent implements OnInit, OnDestroy{
       this.deleteEmployee = employee;
       button.setAttribute('data-target', '#deleteEmployeeModal');
     }
-    // if (mode === 'deleteDoctor'){
-    //   this.deleteDoctor = doctor;
-    //   button.setAttribute('data-target', '#deleteDoctorModal');
-    // }
+    if (mode === 'addWeekTable'){
+      button.setAttribute('data-target', '#addWeekTableModal');
+    }
+    if (mode === 'editWeekTable'){
+      button.setAttribute('data-target', '#editWeekTableModal');
+    }
+    if (mode === 'findWeekTableByDoctor'){
+      button.setAttribute('data-target', '#findWeekTableByDoctorModal');
+    }
+    if (mode === 'weekTable'){
+      button.setAttribute('data-target', '#weekTableModal');
+    }
     container?.appendChild(button);
     button.click();
   }
@@ -254,7 +274,7 @@ export class AppComponent implements OnInit, OnDestroy{
         }
       );
   }
-
+// Week table
   public getWeekTables(): void {
     this.employeeService.getWeekTables()
       .pipe(
@@ -262,7 +282,7 @@ export class AppComponent implements OnInit, OnDestroy{
       )
       .subscribe(
         (response: WeekTable[]) => {
-          this.weekTable = response;
+          this.weekTables = response;
         },
         (error: HttpErrorResponse) => {
           alert(error.message);
@@ -270,9 +290,41 @@ export class AppComponent implements OnInit, OnDestroy{
       )
   }
 
+  public onAddWeekTable(addForm: NgForm): void {
+    document.getElementById('add-table-form')?.click();
+    this.employeeService.addWeekTable(addForm.value)
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (response: WeekTable) => {
+          console.log(response);
+          this.weekTables = [...this.weekTables, response]
+          addForm.reset();
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+          addForm.reset();
+        }
+      )
+  }
 
-
-
+  public onEditWeekTable(weekTable: WeekTable): void {
+    this.employeeService.updateWeekTable(weekTable)
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (response: WeekTable) => {
+          console.log(response);
+          // this.getEmployees();
+          this.weekTables = this.weekTables.map((week)=> week.id === response.id ? response : week)
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+  }
 
   onChangeSelect(doctor_id : number):void{
     console.log(doctor_id);

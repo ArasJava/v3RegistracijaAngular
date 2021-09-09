@@ -66,8 +66,8 @@ export class EmployeeService {
     return this.httpClient.post<WeekTable>(`${this.baseURL}/weekTable/add`, weekTable);
   }
 
-  public updateWeekTable(weekTable: Doctor): Observable<Doctor>{
-    return this.httpClient.put<Doctor>(`${this.baseURL}/weekTable/update`, weekTable);
+  public updateWeekTable(weekTable: WeekTable): Observable<WeekTable>{
+    return this.httpClient.put<WeekTable>(`${this.baseURL}/weekTable/update`, weekTable);
   }
 
   public deleteWeekTable(weekTableId: number): Observable<void>{
