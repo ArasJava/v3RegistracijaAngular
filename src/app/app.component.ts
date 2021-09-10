@@ -44,18 +44,7 @@ export class AppComponent implements OnInit, OnDestroy{
     this.getDoctors();
     this.getWeekTables();
   }
-    // setDefaults() {
-    //   this.weekTable = {
-    //     id:1,
-    //     doctor_id: 14,
-    //     timeStartId: 8,
-    //     monday: true,
-    //     tuesday: true,
-    //     wednesday: true,
-    //     thursday: true,
-    //     friday: true
-    //   };
-    // }
+
 
   ngOnDestroy() {
     this.destroy$.next();
