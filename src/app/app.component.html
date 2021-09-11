@@ -104,7 +104,7 @@
           <form #addForm="ngForm" (ngSubmit)="onAddEmployee(addForm)">
 
             <div class="form-group">
-              <label for="doctor">Gydytojų sąrašas :</label>
+              <label for="doctor">Pasirinkite gydytoją:</label>
               <select id="doctor" ngModel name="doctor" class="form-control" [(ngModel)]="doctor"
                       multiple aria-label="multiple select example">
                 <!--disabled-->
@@ -117,15 +117,10 @@
             </div>
             <!--              Gydytoją įvedame ranka          -->
             <div class="form-group">
-              <label for="doctor_id">Įveskite tik skaičių esantį prieš gydytojo vardą </label>
+              <label for="doctor_id"> ir įveskite skaičių {{doctor}} (esantį prieš gydytojo vardą) </label>
               <input type="text" ngModel name="doctor_id" class="form-control" id="doctor_id"
                      placeholder="Įrašykite tik skaičių" required>
             </div>
-            <!-- su ng model-->
-            <p>{{doctor}}</p>
-            <!--            <ng-template [ngIf]="doctor == value"  >-->
-            <!--              <p> sutampa </p>-->
-            <!--            </ng-template>-->
 
             <div class="form-group">
               <label for="day_id">Diena 1-pirmadienis, 2-antradienis, 3-trečiadienis, 4-ketvirtadienis,
@@ -598,10 +593,10 @@
 <!-- Add Week table  Modal -->
 <div class="modal fade" id="addWeekTableModal" tabindex="-1" role="dialog" aria-labelledby="addWeekTableModalLabel"
      aria-hidden="true">
-  <div class="modal-dialog modal-sm" role="document">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addWeekTableModalLabel">Savaitės užimtumas </h5>
+        <h5 class="modal-title" id="addWeekTableModalLabel">Savaitės gyd. užimtumas </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -684,10 +679,17 @@
 <!-- Edit WeekTable Modal -->
 <div class="modal fade" id="editWeekTableModal" tabindex="-1" role="dialog" aria-labelledby="editWeekTableModalLabel"
      aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editWeekTableModalLabel">Redaguojame gyd {{editWeekTable?.doctor_id}} užimtumą</h5>
+
+        <div *ngFor="let doctor of doctors">
+          <div *ngIf=" editWeekTable?.doctor_id == doctor.id">
+            <h5 class="modal-title" id="editWeekTableModalLabel">Keičiame gydytojo
+              {{doctor.doctorName}} {{doctor.doctorSurname}} savaitinį {{editWeekTable?.time_id}} valandos užimtumą</h5>
+          </div>
+        </div>
+
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -734,31 +736,32 @@
             <!--          <div *ngIf="weekTable == weekTable?.id">-->
 
             <form #editWeekTableForm="ngForm">
-              <div class="form-group">
-                <label for="doctor_id">Gyd id</label>
-                <input type="text" ngModel="{{editWeekTable?.doctor_id}}" name="doctor_id" class="form-control">
-              </div>
+
+<!--              <div class="form-group">-->
+<!--                <label for="doctor_id">Gyd id</label>-->
+<!--                <input type="text" ngModel="{{editWeekTable?.doctor_id}}" name="doctor_id" class="form-control">-->
+<!--              </div>-->
+<!--              <div class="form-group">-->
+<!--                <label for="time_id">Valanda</label>-->
+<!--                <input type="text" ngModel="{{editWeekTable?.time_id}}" name="time_id" class="form-control">-->
+<!--              </div>-->
 
               <div class="form-group">
-                <label for="time_id">Valanda</label>
-                <input type="text" ngModel="{{editWeekTable?.time_id}}" name="time_id" class="form-control">
-              </div>
-              <div class="form-group">
                 <label for="monday">Pirmadienis</label>
-                <input type="text" ngModel="{{editWeekTable?.monday}}" name="monday" class="form-control">
+                <input type="checkbox" ngModel="{{editWeekTable?.monday}}" name="monday" class="form-control">
               </div>
               <div class="form-group">
                 <label for="tuesday">Antradienis</label>
-                <input type="text" ngModel="{{editWeekTable?.tuesday}}" name="tuesday" class="form-control">
+                <input type="checkbox" ngModel="{{editWeekTable?.tuesday}}" name="tuesday" class="form-control">
               </div>
               <div class="form-group">
                 <label for="wednesday">Trečiadienis</label>
-                <input type="text" ngModel="{{editWeekTable?.wednesday}}" name="wednesday" class="form-control">
+                <input type="checkbox" ngModel="{{editWeekTable?.wednesday}}" name="wednesday" class="form-control">
               </div>
 
               <div class="form-group">
                 <label for="thursday">Ketvirtadienis</label>
-                <input type="text" ngModel="{{editWeekTable?.thursday}}" name="thursday" class="form-control"
+                <input type="checkbox" ngModel="{{editWeekTable?.thursday}}" name="thursday" class="form-control"
                        aria-describedby="emailHelp">
               </div>
               <input type="hidden" ngModel="{{editWeekTable?.id}}" name="id" class="form-control" id="id">
@@ -766,7 +769,7 @@
               <!--                 id="userCode">-->
               <div class="form-group">
                 <label for="friday">Penktadienis</label>
-                <input type="email" ngModel="{{editWeekTable?.friday}}" name="friday" class="form-control">
+                <input type="checkbox" ngModel="{{editWeekTable?.friday}}" name="friday" class="form-control">
               </div>
 
 

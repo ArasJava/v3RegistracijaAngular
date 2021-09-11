@@ -357,8 +357,8 @@ export class AppComponent implements OnInit, OnDestroy{
       );
   }
 
-  onChangeSelect(doctor_id : number):void{
-    console.log(doctor_id);
-  }
+  // onChangeSelect(doctor_id : number):void{
+  //   console.log(doctor_id);
+  // }
 
 }
