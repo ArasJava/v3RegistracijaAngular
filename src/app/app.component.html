@@ -10,32 +10,32 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item active">
-        <a class="nav-link" style="color:yellow;" (click)="onOpenModal(null, 'add')">Nauja paciento registracija
-          <span class="sr-only">(current)</span></a>
-      </li>
-
-      <li class="nav-item active">
-        <a class="nav-link" style="color:sandybrown;" (click)="onOpenModal(null, 'workTime')">Gydytojų užimtumo lentelė
-          <span class="sr-only">(current)</span></a>
-      </li>
-
-      <li class="nav-item active">
-        <a class="nav-link" style="color:skyblue;" (click)="onOpenModal(null, 'addDoctor')">Prideti gydytoją
-          <span class="sr-only">(current)</span></a>
-      </li>
-
-      <li class="nav-item active">
-        <a class="nav-link" style="color:pink;" (click)="onOpenModal(null, 'addWeekTable')">Pridėti savaitine lentele
+        <a class="nav-link" style="color:yellow;" (click)="onOpenModalEmploee(null, 'add')">Nauja paciento registracija
           <span class="sr-only">(current)</span></a>
       </li>
 
 <!--      <li class="nav-item active">-->
-<!--        <a class="nav-link" style="color:cyan;" (click)="onOpenModal(null, 'editWeekTable')">Redaguoti savaitine lentele-->
+<!--        <a class="nav-link" style="color:sandybrown;" (click)="onOpenModalWeekTable(null, 'workTime')">Gydytojų užimtumo lentelė-->
 <!--          <span class="sr-only">(current)</span></a>-->
 <!--      </li>-->
 
       <li class="nav-item active">
-        <a class="nav-link" style="color:magenta;" (click)="onOpenModal(null, 'weekTable')">Savaitine lentele
+        <a class="nav-link" style="color:skyblue;" (click)="onOpenModalEmploee(null, 'addDoctor')">Prideti gydytoją
+          <span class="sr-only">(current)</span></a>
+      </li>
+
+      <li class="nav-item active">
+        <a class="nav-link" style="color:pink;" (click)="onOpenModalWeekTable(null, 'addWeekTable')">Pildyti gyd. užimtumo lentelę
+          <span class="sr-only">(current)</span></a>
+      </li>
+
+<!--      <li class="nav-item active">-->
+<!--        <a class="nav-link" style="color:cyan;" (click)="onOpenModalWeekTable(null, 'editWeekTable')">Redaguoti savaitine lentele-->
+<!--          <span class="sr-only">(current)</span></a>-->
+<!--      </li>-->
+
+      <li class="nav-item active">
+        <a class="nav-link" style="color:magenta;" (click)="onOpenModalWeekTable(null, 'weekTable')">Savaitinio gyd. užimtumo peržiūra ir redagavimas
           <span class="sr-only">(current)</span></a>
       </li>
 
@@ -49,7 +49,6 @@
 </nav>
 
 
-
 <!--Lentele (registraciju) po navbar'u-->
 <div class="container" id="main-container">
   <div class="row">
@@ -59,13 +58,11 @@
         <ul class="list-group list-group-flush">
 
           <li class="list-group-item">Gydytojas :
-            <div *ngFor="let doctor of doctors" >
-              <ng-template [ngIf]= "doctor.id == employee?.doctor_id" >
+            <div *ngFor="let doctor of doctors">
+              <ng-template [ngIf]="doctor.id == employee?.doctor_id">
                 <div>
                   <td> {{doctor.doctorName }} </td>
                   <td> &nbsp;{{doctor.doctorSurname }} </td>
-<!--                  <td> - {{doctor.doctorSpecialization }} </td>-->
-<!--                  <td>  ({{doctor.id }}) </td>-->
                 </div>
               </ng-template>
             </div>
@@ -82,9 +79,9 @@
         </ul>
         <div class="card-body">
           <div class="float-right btn-group btn-group-sm">
-            <a (click)="onOpenModal(employee, 'edit')" class="btn btn-primary tooltips" data-placement="top"
+            <a (click)="onOpenModalEmploee(employee, 'edit')" class="btn btn-primary tooltips" data-placement="top"
                data-original-title="Redaguoti"><i class="fa fa-pencil"></i> </a>
-            <a (click)="onOpenModal(employee, 'delete')" class="btn btn-danger tooltips" data-placement="top"
+            <a (click)="onOpenModalEmploee(employee, 'delete')" class="btn btn-danger tooltips" data-placement="top"
                data-original-title="Ištrinti"><i class="fa fa-times"></i></a>
           </div>
         </div>
@@ -108,35 +105,38 @@
 
             <div class="form-group">
               <label for="doctor">Gydytojų sąrašas :</label>
-              <select id="doctor" ngModel name="doctor_id" class="form-control" [(ngModel)] ="doctor" multiple aria-label="multiple select example" >
-<!--disabled-->
-<!--                <select id="doctor_id" ngModel name = "doctor_id"  class="form-control" [(ngModel)] ="docId" multiple aria-label="doctor_id" required>-->
-
-                <option [value]="[doctor.id]" *ngFor="let doctor of doctors" >
-                  {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}} - {{doctor.doctorSpecialization}}
+              <select id="doctor" ngModel name="doctor" class="form-control" [(ngModel)]="doctor"
+                      multiple aria-label="multiple select example">
+                <!--disabled-->
+                <!--                 required>-->
+                <option [value]="[doctor.id]" *ngFor="let doctor of doctors">
+                  {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}}
+                  - {{doctor.doctorSpecialization}}
                 </option>
               </select>
             </div>
-
-
-<!--              Gydytoją įvedame ranka          -->
-                        <div class="form-group">
-                          <label for="doctor_id">Įveskite tik skaičių esantį prieš gydytojo vardą </label>
-                          <input type="text" ngModel name="doctor_id" class="form-control" id="doctor_id" placeholder="{{doctor}}" required>
-                        </div>
+            <!--              Gydytoją įvedame ranka          -->
+            <div class="form-group">
+              <label for="doctor_id">Įveskite tik skaičių esantį prieš gydytojo vardą </label>
+              <input type="text" ngModel name="doctor_id" class="form-control" id="doctor_id"
+                     placeholder="Įrašykite tik skaičių" required>
+            </div>
             <!-- su ng model-->
-<!--            <p>{{doctor}}</p>-->
-<!--            <ng-template [ngIf]="doctor == value"  >-->
-<!--              <p> sutampa </p>-->
-<!--            </ng-template>-->
+            <p>{{doctor}}</p>
+            <!--            <ng-template [ngIf]="doctor == value"  >-->
+            <!--              <p> sutampa </p>-->
+            <!--            </ng-template>-->
 
             <div class="form-group">
-              <label for="day_id">Diena 1-pirmadienis, 2-antradienis, 3-trečiadienis, 4-ketvirtadienis, 5-penktadienis</label>
-              <input type="text" ngModel name="day_id" class="form-control" id="day_id" placeholder="Įrašykite tik skaičių" required>
+              <label for="day_id">Diena 1-pirmadienis, 2-antradienis, 3-trečiadienis, 4-ketvirtadienis,
+                5-penktadienis</label>
+              <input type="text" ngModel name="day_id" class="form-control" id="day_id"
+                     placeholder="Įrašykite tik skaičių" required>
             </div>
             <div class="form-group">
               <label for="time_id">Valanda: 8-8:00, 9-9:00, 10-10:00, 11-11:00, 12-12:00</label>
-              <input type="text" ngModel name="time_id" class="form-control" id="time_id" placeholder="Įrašykite tik skaičių" required>
+              <input type="text" ngModel name="time_id" class="form-control" id="time_id"
+                     placeholder="Įrašykite tik skaičių" required>
             </div>
             <div class="form-group">
               <label for="purpose">Įrašykite vizito pobūdį: pirmas ar pakartotinas ar procedūra</label>
@@ -183,7 +183,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="updateEmployeeModalLabel">Redaguojame {{editDoctor?.doctorName}} pasirinkimą</h5>
+          <h5 class="modal-title" id="updateEmployeeModalLabel">Redaguojame paciento {{editEmployee?.name}} pasirinkimą</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -192,9 +192,11 @@
 
           <div class="form-group">
             <label for="doctorEdit">Gydytojų sąrašas :</label>
-            <select id="doctorEdit" ngModel name="doctor_id" class="form-control" multiple aria-label="multiple select example" disabled >
-              <option value="{{doctor.id}}" *ngFor="let doctor of doctors" >
-                {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}} - {{doctor.doctorSpecialization}}
+            <select id="doctorEdit" ngModel name="doctor_id" class="form-control" multiple
+                    aria-label="multiple select example" disabled>
+              <option value="{{doctor.id}}" *ngFor="let doctor of doctors">
+                {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}}
+                - {{doctor.doctorSpecialization}}
               </option>
             </select>
           </div>
@@ -289,224 +291,238 @@
         </button>
       </div>
       <div class="modal-body">
-<!--        <form #doctorSelectForm="ngForm" (ngSubmit)="onAddEmployee(doctorSelectForm)">-->
+        <!--        <form #doctorSelectForm="ngForm" (ngSubmit)="onAddEmployee(doctorSelectForm)">-->
         <form #timeSelectForm="ngForm" (ngSubmit)="onAddWeekTable(timeSelectForm)">
-         <div class="form-group">
-          <label for="doctorSel">Pasirinkite gydytoją iš sąrašo</label>
-           <select ngModel name="doctorSel" id="doctorSel" class="form-control" [(ngModel)] ="doctor" multiple aria-label="multiple select example" required>
-            <option *ngFor="let doctor of doctors" [value]="[doctor.id] ">
-              {{doctor?.doctorName}}  {{doctor?.doctorSurname}}  {{doctor?.doctorSpecialization}} ({{doctor?.id}})
-            </option>
-          </select>
-        </div>
-
-<p>{{doctor}}</p>
-<!--          <div class="modal-footer">-->
-<!--            <button type="button" id="doctorSelect-form" class="btn btn-secondary" data-dismiss="modal">Atsisakyti-->
-<!--            </button>-->
-<!--            <button [disabled]="doctorSelectForm.invalid" type="submit" class="btn btn-primary">Patvirtinti</button>-->
-<!--          </div>-->
-<!--        </form>-->
-
-
-2021 metų xx savaites gydytojo užimtumo lentele
-<!--        <form #timeSelectForm="ngForm" (ngSubmit)="onAddWeekTable(timeSelectForm)">-->
-        <div class="container">
-
-          <div class="table-responsive">
-            <table class="table table-bordered text-center">
-              <thead>
-              <tr class="bg-light-gray">
-                <th class="text-uppercase">Laikas
-                </th>
-                <th class="text-uppercase">Pirmadienis</th>
-                <th class="text-uppercase">Antradienis</th>
-                <th class="text-uppercase">Treciadienis</th>
-                <th class="text-uppercase">Ketvirtadienis</th>
-                <th class="text-uppercase">Penktadienis</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                <td class="align-middle">8:00-09:00</td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="8monday">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="8tuesday">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="8wednesday">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="8thursday">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="8friday">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td class="align-middle">9:00-10:00</td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="9monday">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                  <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td class="align-middle">10:00-11:00</td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td class="align-middle">11:00-12:00</td>
-                <td>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                  <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                  <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                </div>
-                </td>
-              </tr>
-
-              <tr>
-                <td class="align-middle">12:00-13:00</td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                <div class="form-check form-switch">
-                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                  <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
-                  </div>
-                </td>
-              </tr>
-              </tbody>
-            </table>
+          <div class="form-group">
+            <label for="doctorSel">Pasirinkite gydytoją iš sąrašo</label>
+            <select ngModel name="doctorSel" id="doctorSel" class="form-control" [(ngModel)]="doctor" multiple
+                    aria-label="multiple select example" required>
+              <option *ngFor="let doctor of doctors" [value]="[doctor.id] ">
+                {{doctor?.doctorName}}  {{doctor?.doctorSurname}}  {{doctor?.doctorSpecialization}} ({{doctor?.id}})
+              </option>
+            </select>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" id="add-timetable-form" class="btn btn-secondary" data-dismiss="modal">Atsisakyti
-          </button>
-          <button [disabled]="timeSelectForm.invalid" type="submit" class="btn btn-primary">Patvirtinti</button>
-        </div>
         </form>
+                <div class="form-group">
+                  <label for="doctor_id_1">Įveskite skaičių {{doctor}} į tuščią lauką žemiau</label>
+                  <input type="text" ngModel name="doctor_id" class="form-control" id="doctor_id_1"
+                         placeholder=" skaičius " required>
+                </div>
 
+          <!--          <div class="modal-footer">-->
+          <!--            <button type="button" id="doctorSelect-form" class="btn btn-secondary" data-dismiss="modal">Atsisakyti-->
+          <!--            </button>-->
+          <!--            <button [disabled]="doctorSelectForm.invalid" type="submit" class="btn btn-primary">Patvirtinti</button>-->
+          <!--          </div>-->
+          <!--        </form>-->
+
+
+          2021 metų xx savaites gydytojo užimtumo lentele
+        <form #timeSelectForm="ngForm" (ngSubmit)="onAddWeekTable(timeSelectForm)">
+          <div class="container">
+
+            <div class="table-responsive">
+              <table class="table table-bordered text-center">
+                <thead>
+                <tr class="bg-light-gray">
+                  <th class="text-uppercase">Laikas
+                  </th>
+                  <th class="text-uppercase">Pirmadienis</th>
+                  <th class="text-uppercase">Antradienis</th>
+                  <th class="text-uppercase">Treciadienis</th>
+                  <th class="text-uppercase">Ketvirtadienis</th>
+                  <th class="text-uppercase">Penktadienis</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td class="align-middle">8:00-09:00</td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" ngModel name="monday" id="8monday">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">(užimtas- jei pažymėta)</label>
+                    </div>
+                  </td>
+
+
+<!--                  <div class="form-group">-->
+<!--                    <label for="monday">Pirmadienis (užimtas- jei pažymėta)</label>-->
+<!--                    <input type="checkbox" ngModel name="monday" class="form-control" id="monday" placeholder="true/false"-->
+<!--                           checked>-->
+
+
+
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" ngModel name="tuesday" id="8tuesday">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">(užimtas- jei pažymėta)</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" ngModel name="wednesday" id="8wednesday">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">(užimtas- jei pažymėta)</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" ngModel name="thursday" id="8thursday">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">(užimtas- jei pažymėta)</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" ngModel name="friday" id="8friday">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">(užimtas- jei pažymėta)</label>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="align-middle">9:00-10:00</td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="9monday">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="align-middle">10:00-11:00</td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="align-middle">11:00-12:00</td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="align-middle">12:00-13:00</td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault">Laisvas</label>
+                    </div>
+                  </td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="add-timetable-form" class="btn btn-secondary" data-dismiss="modal">Atsisakyti
+            </button>
+            <button [disabled]="timeSelectForm.invalid" type="submit" class="btn btn-primary">Patvirtinti</button>
+          </div>
+        </form>
 
 
       </div>
@@ -533,16 +549,16 @@
         </button>
       </div>
 
-      <p ><b>&emsp;Klinikoje dirbantys gydytojai:</b></p>
+      <p><b>&emsp;Klinikoje dirbantys gydytojai:</b></p>
       <div class="container">
-        <div *ngFor="let doctor of doctors" >
+        <div *ngFor="let doctor of doctors">
           <td>   {{doctor.doctorName }} </td>
-          <td> &nbsp;  {{doctor.doctorSurname }} </td>
+          <td> &nbsp; {{doctor.doctorSurname }} </td>
           <td> &ensp; , {{doctor.doctorSpecialization }} </td>
-          <td>  &nbsp;({{doctor.id }}) </td>
+          <td> &nbsp;({{doctor.id }})</td>
 
-<!--          <td> &emsp;<button (click)="onDeleteDoctor(doctor.id)" type="submit" class="btn btn-danger btn-sm"> ištrinti-->
-<!--            <i class="fa fa-times btn-sm"></i></button></td>-->
+          <!--          <td> &emsp;<button (click)="onDeleteDoctor(doctor.id)" type="submit" class="btn btn-danger btn-sm"> ištrinti-->
+          <!--            <i class="fa fa-times btn-sm"></i></button></td>-->
 
         </div>
       </div>
@@ -557,12 +573,14 @@
           </div>
           <div class="form-group">
             <label for="doctorSurname">Gydytojo pavardė</label>
-            <input type="text" ngModel name="doctorSurname" class="form-control" id="doctorSurname" placeholder="pavardė"
+            <input type="text" ngModel name="doctorSurname" class="form-control" id="doctorSurname"
+                   placeholder="pavardė"
                    required>
           </div>
           <div class="form-group">
             <label for="doctorSpecialization">Gydytojo specializacija</label>
-            <input type="text" ngModel name="doctorSpecialization" class="form-control" id="doctorSpecialization" placeholder=" specializacija"
+            <input type="text" ngModel name="doctorSpecialization" class="form-control" id="doctorSpecialization"
+                   placeholder=" specializacija"
                    required>
           </div>
           <div class="modal-footer">
@@ -577,14 +595,13 @@
 </div>
 
 
-
 <!-- Add Week table  Modal -->
 <div class="modal fade" id="addWeekTableModal" tabindex="-1" role="dialog" aria-labelledby="addWeekTableModalLabel"
      aria-hidden="true">
   <div class="modal-dialog modal-sm" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="addWeekTableModalLabel">Savaitės užimtumas</h5>
+        <h5 class="modal-title" id="addWeekTableModalLabel">Savaitės užimtumas </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -594,12 +611,14 @@
 
           <div class="form-group">
             <label for="doctorSelect">Gydytojų sąrašas :</label>
-            <select id="doctorSelect" ngModel name="doctor" class="form-control" multiple aria-label="multiple select example" disabled >
+            <select id="doctorSelect" ngModel name="doctor" class="form-control" [(ngModel)]="doctor" multiple
+                    aria-label="multiple select example" >
 
               <!--                <select id="doctor_id" ngModel name = "doctor_id"  class="form-control" [(ngModel)] ="docId" multiple aria-label="doctor_id" required>-->
 
-              <option value="{{doctor.id}}" *ngFor="let doctor of doctors" >
-                {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}} - {{doctor.doctorSpecialization}}
+              <option value="{{doctor.id}}" *ngFor="let doctor of doctors">
+                {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}}
+                - {{doctor.doctorSpecialization}}
               </option>
             </select>
           </div>
@@ -608,46 +627,52 @@
 
           <!--              Gydytoją įvedame ranka          -->
           <div class="form-group">
-            <label for="doctor__id">Įveskite skaičių esantį prieš gydytojo vardą </label>
-            <input type="text" ngModel name="doctor_id" class="form-control"  id="doctor__id" placeholder="Įrašykite tik skaičių" required>
+            <label for="doctor__id">Įrašykite skaičių {{doctor}} esantį prieš gydytojo vardą </label>
+            <input type="text" ngModel name="doctor_id" class="form-control" id="doctor__id"
+                   placeholder="Įrašykite tik skaičių" required>
           </div>
 
           <div class="form-group">
-            <label for="time_id">Valanda: 8, 9, 10, 11, 12</label>
-            <input type="text" ngModel name="time_id"  class="form-control" id="time_id" placeholder="Įrašykite tik skaičių">
+            <label for="time_id">Įrašykite vizito pradžios valandos skaičių: 8, 9, 10, 11, 12</label>
+            <input type="text" ngModel name="time_id" class="form-control" id="time_id"
+                   placeholder="Įrašykite tik skaičių">
           </div>
 
-<!--          <div class="form-group">-->
-<!--            <label for="timeStart">Laikas 8:00</label>-->
-<!--            <input type="text" name="timeStart" [(ngModel)] ="weekTable.timeStart" [value]="8"   class="form-control" id="timeStart" placeholder="8:00">-->
-<!--          </div>-->
+          <!--          <div class="form-group">-->
+          <!--            <label for="timeStart">Laikas 8:00</label>-->
+          <!--            <input type="text" name="timeStart" [(ngModel)] ="weekTable.timeStart" [value]="8"   class="form-control" id="timeStart" placeholder="8:00">-->
+          <!--          </div>-->
 
           <div class="form-group">
-            <label for="monday">Pirmadienis</label>
-            <input type="checkbox" ngModel name="monday"  class="form-control" id="monday" placeholder="true/false" checked>
+            <label for="monday">Pirmadienis (užimtas- jei pažymėta)</label>
+            <input type="checkbox" ngModel name="monday" class="form-control" id="monday" placeholder="true/false"
+                   checked>
           </div>
           <div class="form-group">
-            <label for="tuesday">Antradienis</label>
-            <input type="checkbox" ngModel name="tuesday"  class="form-control" id="tuesday" placeholder="true/false" checked>
+            <label for="tuesday">Antradienis (užimtas- jei pažymėta)</label>
+            <input type="checkbox" ngModel name="tuesday" class="form-control" id="tuesday" placeholder="true/false"
+                   checked>
           </div>
           <div class="form-group">
-            <label for="wednesday">Treciadienis</label>
-            <input type="checkbox" ngModel name="wednesday"  class="form-control" id="wednesday" placeholder="true/false"checked>
+            <label for="wednesday">Treciadienis (užimtas- jei pažymėta)</label>
+            <input type="checkbox" ngModel name="wednesday" class="form-control" id="wednesday" placeholder="true/false"
+                   checked>
           </div>
           <div class="form-group">
-            <label for="thursday">Ketvirtadienis</label>
-            <input type="checkbox" ngModel name="thursday"  class="form-control" id="thursday" placeholder="true/false" checked>
+            <label for="thursday">Ketvirtadienis (užimtas- jei pažymėta)</label>
+            <input type="checkbox" ngModel name="thursday" class="form-control" id="thursday" placeholder="true/false"
+                   checked>
           </div>
           <div class="form-group">
-            <label for="friday">Penktadienis </label>
-            <input type="checkbox" ngModel name="friday"  class="form-control" id="friday"
+            <label for="friday">Penktadienis (užimtas- jei pažymėta)</label>
+            <input type="checkbox" ngModel name="friday" class="form-control" id="friday"
                    placeholder="true/false" checked>
           </div>
           <div class="modal-footer">
             <button type="button" id="add-table-form" class="btn btn-secondary" data-dismiss="modal">Atsisakyti
             </button>
             <button [disabled]="addTableForm.invalid" type="submit" class="btn btn-primary">Patvirtinti</button>
-<!--            <button type="button" (click)="setDefaults()">Set Defaults</button>-->
+            <!--            <button type="button" (click)="setDefaults()">Set Defaults</button>-->
           </div>
         </form>
       </div>
@@ -662,76 +687,104 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="editWeekTableModalLabel">Redaguojame {{editDoctor?.doctorName}} pasirinkimą</h5>
+        <h5 class="modal-title" id="editWeekTableModalLabel">Redaguojame gyd {{editWeekTable?.doctor_id}} užimtumą</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
 
+<!--        <div class="form-group">-->
+<!--          <label for="doctorSel1">Gydytojų sąrašas :</label>-->
+<!--          <select id="doctorSel1" ngModel name="doctor_id" class="form-control" [(ngModel)]="doctor"-->
+<!--                  multiple aria-label="multiple select example">-->
+<!--            <option value="{{doctor.id}}" *ngFor="let doctor of doctors">-->
+<!--              ({{doctor.id}}) -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}}-->
+<!--              - {{doctor.doctorSpecialization}}-->
+<!--            </option>-->
+<!--          </select>-->
+<!--        </div>-->
+<!--        <p>{{doctor}}</p>-->
 
-          <div class="form-group">
-          <label for="doctorSel1">Gydytojų sąrašas :</label>
-          <select id="doctorSel1" ngModel name="doctor_id" class="form-control" multiple aria-label="multiple select example" disabled >
-            <option value="{{doctor.id}}" *ngFor="let doctor of doctors" >
-              {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}} - {{doctor.doctorSpecialization}}
-            </option>
-          </select>
+<!--        <div class="form-group">-->
+<!--          <label for="doctor_id_1">Įveskite tik skaičių esantį kabutėse, prieš gydytojo vardą </label>-->
+<!--          <input type="text" ngModel name="doctor_id" class="form-control" id="doctor_id_1"-->
+<!--                 placeholder="Įrašykite tik skaičių" required>-->
+<!--        </div>-->
+
+<!--        <div>-->
+<!--          <label for="weekTableSel">Valandos :</label>-->
+<!--          <select id="weekTableSel" ngModel name="weekTable_id" class="form-control" [(ngModel)]="weekTable"-->
+<!--                  multiple aria-label="multiple select example">-->
+<!--            <option value="{{weekTable.id}}" *ngFor="let weekTable of weekTables">-->
+<!--              ({{weekTable.id}}) - {{weekTable.time_id}}-->
+<!--            </option>-->
+<!--          </select>-->
+<!--        </div>-->
+<!--        <p>{{weekTable}}</p>-->
+
+<!--        <div class="form-group">-->
+<!--          <label for="timeId">Įveskite tik skaičių esantį kabutėse, prieš valandas </label>-->
+<!--          <input type="text" ngModel name="time_id" class="form-control" id="timeId"-->
+<!--                 placeholder="Įrašykite tik skaičių" required>-->
+<!--        </div>-->
+
+<!--        <div *ngFor="let weekTable of weekTables">-->
+<!--          <div *ngIf="doctor == weekTable?.doctor_id">-->
+            <!--          <div *ngIf="weekTable == weekTable?.id">-->
+
+            <form #editWeekTableForm="ngForm">
+              <div class="form-group">
+                <label for="doctor_id">Gyd id</label>
+                <input type="text" ngModel="{{editWeekTable?.doctor_id}}" name="doctor_id" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="time_id">Valanda</label>
+                <input type="text" ngModel="{{editWeekTable?.time_id}}" name="time_id" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="monday">Pirmadienis</label>
+                <input type="text" ngModel="{{editWeekTable?.monday}}" name="monday" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="tuesday">Antradienis</label>
+                <input type="text" ngModel="{{editWeekTable?.tuesday}}" name="tuesday" class="form-control">
+              </div>
+              <div class="form-group">
+                <label for="wednesday">Trečiadienis</label>
+                <input type="text" ngModel="{{editWeekTable?.wednesday}}" name="wednesday" class="form-control">
+              </div>
+
+              <div class="form-group">
+                <label for="thursday">Ketvirtadienis</label>
+                <input type="text" ngModel="{{editWeekTable?.thursday}}" name="thursday" class="form-control"
+                       aria-describedby="emailHelp">
+              </div>
+              <input type="hidden" ngModel="{{editWeekTable?.id}}" name="id" class="form-control" id="id">
+              <!--          <input type="hidden" ngModel="{{editEmployee?.employeeCode}}" name="userCode" class="form-control"-->
+              <!--                 id="userCode">-->
+              <div class="form-group">
+                <label for="friday">Penktadienis</label>
+                <input type="email" ngModel="{{editWeekTable?.friday}}" name="friday" class="form-control">
+              </div>
+
+
+              <div class="modal-footer">
+                <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Atsisakyti</button>
+                <button (click)="onEditWeekTable(editWeekTableForm.value)" data-dismiss="modal" class="btn btn-primary">
+                  Patvirtinti
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-
-        <form #editForm="ngForm">
-          <div class="form-group">
-            <label for="doctor_id">Gydytojas</label>
-            <input type="text" ngModel="{{editEmployee?.doctor_id}}" name="doctor_id" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="day_id">Savaitės diena</label>
-            <input type="text" ngModel="{{editEmployee?.day_id}}" name="day_id" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="time_id">Laikas</label>
-            <input type="text" ngModel="{{editEmployee?.time_id}}" name="time_id" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="name">Pirmas/pakartotinas/procedura</label>
-            <input type="text" ngModel="{{editEmployee?.purpose}}" name="purpose" class="form-control">
-          </div>
-
-          <div class="form-group">
-            <label for="name">Vardas</label>
-            <input type="text" ngModel="{{editEmployee?.name}}" name="name" class="form-control"
-                   aria-describedby="emailHelp">
-          </div>
-          <input type="hidden" ngModel="{{editEmployee?.id}}" name="id" class="form-control" id="id">
-          <input type="hidden" ngModel="{{editEmployee?.employeeCode}}" name="userCode" class="form-control"
-                 id="userCode">
-          <div class="form-group">
-            <label for="surname">Pavardė</label>
-            <input type="email" ngModel="{{editEmployee?.surname}}" name="surname" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="birthday">Gimimo data</label>
-            <input type="text" ngModel="{{editEmployee?.birthday}}" name="birthday" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="phone">Telefono numeris</label>
-            <input type="text" ngModel="{{editEmployee?.phone}}" name="phone" class="form-control">
-          </div>
-          <div class="form-group">
-            <label for="message">Vizito priežastis</label>
-            <input type="text" ngModel="{{editEmployee?.message}}" name="message" class="form-control">
-          </div>
-          <div class="modal-footer">
-            <button type="button" id="" data-dismiss="modal" class="btn btn-secondary">Atsisakyti</button>
-            <button (click)="onEditWeekTable(editForm.value)" data-dismiss="modal" class="btn btn-primary">
-              Patvirtinti
-            </button>
-          </div>
-        </form>
       </div>
     </div>
-  </div>
-</div>
+
+<!--  </div>-->
+<!--</div>-->
+<!--</div>-->
 
 <!--uzimtumas pagal gydytojus Modal-->
 <div class="modal fade" id="weekTableModal" tabindex="-1" role="dialog" aria-labelledby="weekTableModalLabel"
@@ -741,28 +794,29 @@
       <div class="modal-header">
         <div class="form-group">
 
-          <label for="doctor1">Gydytojų sąrašas :</label>
-          <select id="doctor1"  class="form-control" [(ngModel)] ="doctor" multiple aria-label="multiple select example"  >
-            <option [value]="[doctor.id]" *ngFor="let doctor of doctors" >
-              {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}} - {{doctor.doctorSpecialization}}
+          <label for="doctor1">Pasirenkate gydytoją iš sąrašo :</label>
+          <select id="doctor1" class="form-control" [(ngModel)]="doctor" multiple aria-label="multiple select example">
+            <option [value]="[doctor.id]" *ngFor="let doctor of doctors">
+              {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}}
+              - {{doctor.doctorSpecialization}}
             </option>
           </select>
         </div>
 
-<!--        <h5 class="modal-title" id="weekTableModalLabel">Gydytojo {{editDoctor?.doctorName}} užimtumas</h5>-->
+        <!--        <h5 class="modal-title" id="weekTableModalLabel">Gydytojo {{editDoctor?.doctorName}} užimtumas</h5>-->
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
 
-<!--        <div class="form-group">-->
-<!--          <label for="doctor1">Gydytojų sąrašas :</label>-->
-<!--          <select id="doctor1"  class="form-control" [(ngModel)] ="doctor" multiple aria-label="multiple select example"  >-->
-<!--            <option [value]="[doctor.id]" *ngFor="let doctor of doctors" >-->
-<!--              {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}} - {{doctor.doctorSpecialization}}-->
-<!--            </option>-->
-<!--          </select>-->
-<!--        </div>-->
+        <!--        <div class="form-group">-->
+        <!--          <label for="doctor1">Gydytojų sąrašas :</label>-->
+        <!--          <select id="doctor1"  class="form-control" [(ngModel)] ="doctor" multiple aria-label="multiple select example"  >-->
+        <!--            <option [value]="[doctor.id]" *ngFor="let doctor of doctors" >-->
+        <!--              {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}} - {{doctor.doctorSpecialization}}-->
+        <!--            </option>-->
+        <!--          </select>-->
+        <!--        </div>-->
 
 
       </div>
@@ -775,59 +829,61 @@
             <div *ngFor="let weekTable of weekTables" class="col-md-6 col-xl-3">
               <div *ngIf="doctor == weekTable.doctor_id">
 
-              <div class="card m-b-30">
+                <div class="card m-b-30">
 
-                <ul class="list-group list-group-flush">
+                  <ul class="list-group list-group-flush">
 
-                  <li class="list-group-item">Gydytojas :
-                    <div *ngFor="let doctor of doctors" >
-                      <ng-template [ngIf]= "doctor.id == weekTable?.doctor_id" >
-                        <div>
-                          <td> {{doctor.doctorName }} </td>
-                          <td> &nbsp;{{doctor.doctorSurname }} </td>
-                        </div>
-                        <div class="list-group-item">Valanda: {{weekTable?.time_id}}</div>
-                        <div>
-                        <div *ngIf="weekTable?.monday == true; then thenBlock1 else elseBlock1"></div>
-                          <ng-template #thenBlock1>Pirmadienis  užimtas</ng-template>
-                          <ng-template #elseBlock1>Pirmadienis  ..</ng-template>
-                        </div>
-                        <div>
-                        <div *ngIf="weekTable?.tuesday == true; then thenBlock2 else elseBlock2"></div>
-                          <ng-template #thenBlock2>Antradienis  užimtas</ng-template>
-                          <ng-template #elseBlock2>Antradienis  ..</ng-template>
-                        </div>
-                        <div>
-                          <div *ngIf="weekTable?.wednesday == true; then thenBlock3 else elseBlock3"></div>
-                          <ng-template #thenBlock3>Trečiadienis  užimtas</ng-template>
-                          <ng-template #elseBlock3>Trečiadienis   ..</ng-template>
-                        </div>
-                        <div>
-                          <div *ngIf="weekTable?.thursday == true; then thenBlock4 else elseBlock4"></div>
-                          <ng-template #thenBlock4>Ketvirtadienis  užimtas</ng-template>
-                          <ng-template #elseBlock4>Ketvirtadienis  ..</ng-template>
-                        </div>
-                        <div>
-                          <div *ngIf="weekTable?.friday == true; then thenBlock5 else elseBlock5"></div>
-                          <ng-template #thenBlock5>Penktadienis  užimtas</ng-template>
-                          <ng-template #elseBlock5>Penktadienis  ..</ng-template>
-                        </div>
+                    <li class="list-group-item">Gydytojas :
+                      <div *ngFor="let doctor of doctors">
+                        <ng-template [ngIf]="doctor.id == weekTable?.doctor_id">
+                          <div>
+                            <td> {{doctor.doctorName }} </td>
+                            <td> &nbsp;{{doctor.doctorSurname }} </td>
+                          </div>
+                          <div class="list-group-item">Valanda: {{weekTable?.time_id}}</div>
+                          <div>
+                            <div *ngIf="weekTable?.monday == true; then thenBlock1 else elseBlock1"></div>
+                            <ng-template #thenBlock1>Pirmadienis užimtas</ng-template>
+                            <ng-template #elseBlock1>Pirmadienis ..</ng-template>
+                          </div>
+                          <div>
+                            <div *ngIf="weekTable?.tuesday == true; then thenBlock2 else elseBlock2"></div>
+                            <ng-template #thenBlock2>Antradienis užimtas</ng-template>
+                            <ng-template #elseBlock2>Antradienis ..</ng-template>
+                          </div>
+                          <div>
+                            <div *ngIf="weekTable?.wednesday == true; then thenBlock3 else elseBlock3"></div>
+                            <ng-template #thenBlock3>Trečiadienis užimtas</ng-template>
+                            <ng-template #elseBlock3>Trečiadienis ..</ng-template>
+                          </div>
+                          <div>
+                            <div *ngIf="weekTable?.thursday == true; then thenBlock4 else elseBlock4"></div>
+                            <ng-template #thenBlock4>Ketvirtadienis užimtas</ng-template>
+                            <ng-template #elseBlock4>Ketvirtadienis ..</ng-template>
+                          </div>
+                          <div>
+                            <div *ngIf="weekTable?.friday == true; then thenBlock5 else elseBlock5"></div>
+                            <ng-template #thenBlock5>Penktadienis užimtas</ng-template>
+                            <ng-template #elseBlock5>Penktadienis ..</ng-template>
+                          </div>
 
-                      </ng-template>
+                        </ng-template>
+                      </div>
+                    </li>
+
+                  </ul>
+
+                  <div class="card-body">
+                    <div class="float-right btn-group btn-group-sm">
+                      <a (click)="onOpenModalWeekTable(weekTable, 'editWeekTable')" class="btn btn-primary tooltips" data-placement="top"
+                         data-original-title="Redaguoti" onclick="$('.modal').modal('hide')"><i class="fa fa-pencil"></i> </a>
+                      <a (click)="onOpenModalWeekTable(weekTable, 'deleteWeekTable')" class="btn btn-danger tooltips" data-placement="top"
+                         data-original-title="Ištrinti" onclick="$('.modal').modal('hide')"><i class="fa fa-times"></i></a>
                     </div>
-                  </li>
+                  </div>
 
-                </ul>
-<!--                <div class="card-body">-->
-<!--                  <div class="float-right btn-group btn-group-sm">-->
-<!--                    <a (click)="onOpenModal(employee, 'editWeekTable')" class="btn btn-primary tooltips" data-placement="top"-->
-<!--                       data-original-title="Redaguoti"><i class="fa fa-pencil"></i> </a>-->
-<!--                    <a (click)="onOpenModal(employees, 'deleteWeekTable')" class="btn btn-danger tooltips" data-placement="top"-->
-<!--                       data-original-title="Ištrinti"><i class="fa fa-times"></i></a>-->
-<!--                  </div>-->
-<!--                </div>-->
+                </div>
               </div>
-            </div>
 
             </div>
 

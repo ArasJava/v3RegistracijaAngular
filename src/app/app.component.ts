@@ -139,7 +139,7 @@ export class AppComponent implements OnInit, OnDestroy{
     }
   }
 
-  public onOpenModal(employee: Employee, mode: string): void{
+  public onOpenModalEmploee(employee: Employee, mode: string): void{
     const container = document.getElementById('main-container')
     const button = document.createElement('button');
     button.type = 'button';
@@ -151,23 +151,43 @@ export class AppComponent implements OnInit, OnDestroy{
     if (mode === 'addDoctor'){
       button.setAttribute('data-target', '#addDoctorModal');
     }
-    if (mode === 'workTime'){
-      // this.editEmployee = employee;
-      button.setAttribute('data-target', '#workTimeModal');
-    }
     if (mode === 'edit'){
       this.editEmployee = employee;
       button.setAttribute('data-target', '#updateEmployeeModal');
     }
-
     if (mode === 'delete'){
       this.deleteEmployee = employee;
       button.setAttribute('data-target', '#deleteEmployeeModal');
+    }
+
+    container?.appendChild(button);
+    button.click();
+  }
+
+
+  public onOpenModalWeekTable(weekTable: WeekTable, mode: string): void{
+    const container2 = document.getElementById('main-container')
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.style.display = 'none';
+    button.setAttribute('data-toggle', 'modal');
+    // if (mode === 'add'){
+    //   button.setAttribute('data-target', '#addEmployeeModal');
+    // }
+
+    if (mode === 'workTime'){
+      this.editWeekTable = weekTable;
+      button.setAttribute('data-target', '#workTimeModal');
+    }
+    if (mode === 'deleteWeekTable'){
+      this.deleteWeekTable = weekTable;
+      button.setAttribute('data-target', '#deleteWeekTableModal');
     }
     if (mode === 'addWeekTable'){
       button.setAttribute('data-target', '#addWeekTableModal');
     }
     if (mode === 'editWeekTable'){
+      this.editWeekTable = weekTable;
       button.setAttribute('data-target', '#editWeekTableModal');
     }
     if (mode === 'findWeekTableByDoctor'){
@@ -176,9 +196,13 @@ export class AppComponent implements OnInit, OnDestroy{
     if (mode === 'weekTable'){
       button.setAttribute('data-target', '#weekTableModal');
     }
-    container?.appendChild(button);
+    container2?.appendChild(button);
     button.click();
   }
+
+
+
+
   // DOCTOR
   public onAddDoctor(addForm: NgForm): void {
     document.getElementById('add-doc-form')?.click();
@@ -308,6 +332,24 @@ export class AppComponent implements OnInit, OnDestroy{
           console.log(response);
           // this.getEmployees();
           this.weekTables = this.weekTables.map((week)=> week.id === response.id ? response : week)
+        },
+        (error: HttpErrorResponse) => {
+          alert(error.message);
+        }
+      );
+  }
+
+  public onDeleteWeekTable(weekTableId: number): void {
+    console.log(weekTableId)
+    this.employeeService.deleteWeekTable(weekTableId)
+      .pipe(
+        takeUntil(this.destroy$)
+      )
+      .subscribe(
+        (response: void) => {
+          console.log(response);
+          //  this.getEmployees();
+          this.weekTables = this.weekTables.filter((weekTable)=> weekTable.id !== weekTableId)
         },
         (error: HttpErrorResponse) => {
           alert(error.message);
