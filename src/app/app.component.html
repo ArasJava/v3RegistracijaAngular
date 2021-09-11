@@ -10,7 +10,7 @@
     <ul class="navbar-nav mr-auto">
 
       <li class="nav-item active">
-        <a class="nav-link" style="color:yellow;" (click)="onOpenModalEmploee(null, 'add')">Nauja paciento registracija
+        <a class="nav-link" style="color:yellow;" (click)="onOpenModalEmploee(null, 'add')">Nauja registracija (be užimtumo kontrolės)
           <span class="sr-only">(current)</span></a>
       </li>
 
@@ -25,14 +25,10 @@
       </li>
 
       <li class="nav-item active">
-        <a class="nav-link" style="color:pink;" (click)="onOpenModalWeekTable(null, 'addWeekTable')">Pildyti gyd. užimtumo lentelę
+        <a class="nav-link" style="color:pink;" (click)="onOpenModalWeekTable(null, 'addWeekTable')">
+          Naujo darbo laiko gydytojui įvedimas
           <span class="sr-only">(current)</span></a>
       </li>
-
-<!--      <li class="nav-item active">-->
-<!--        <a class="nav-link" style="color:cyan;" (click)="onOpenModalWeekTable(null, 'editWeekTable')">Redaguoti savaitine lentele-->
-<!--          <span class="sr-only">(current)</span></a>-->
-<!--      </li>-->
 
       <li class="nav-item active">
         <a class="nav-link" style="color:magenta;" (click)="onOpenModalWeekTable(null, 'weekTable')">Savaitinio gyd. užimtumo peržiūra ir redagavimas
@@ -52,6 +48,10 @@
 <!--Lentele (registraciju) po navbar'u-->
 <div class="container" id="main-container">
   <div class="row">
+
+
+
+
     <div *ngFor="let employee of employees" class="col-md-6 col-xl-3">
       <div class="card m-b-30">
 
@@ -101,14 +101,17 @@
           </button>
         </div>
         <div class="modal-body">
+
           <form #addForm="ngForm" (ngSubmit)="onAddEmployee(addForm)">
+
+
 
             <div class="form-group">
               <label for="doctor">Pasirinkite gydytoją:</label>
               <select id="doctor" ngModel name="doctor" class="form-control" [(ngModel)]="doctor"
                       multiple aria-label="multiple select example">
                 <!--disabled-->
-                <!--                 required>-->
+                <!--required>-->
                 <option [value]="[doctor.id]" *ngFor="let doctor of doctors">
                   {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}}
                   - {{doctor.doctorSpecialization}}
@@ -122,17 +125,35 @@
                      placeholder="Įrašykite tik skaičių" required>
             </div>
 
+<!--            <div *ngFor="let weekTable of weekTables" class="col-md-6 col-xl-3">-->
+<!--            <div *ngIf="doctor == weekTable.doctor_id">-->
+
+<!--              <div class="form-group">-->
+<!--              <label for="dayId">Pasirinkite vizito pradžios valandą:</label>-->
+<!--              <select id="dayId" ngModel name="day_id" class="form-control" [(ngModel)]="weekTable"-->
+<!--                      multiple aria-label="multiple select example">-->
+<!--                &lt;!&ndash;disabled&ndash;&gt;-->
+<!--                &lt;!&ndash;required>&ndash;&gt;-->
+<!--                <option [value]="[weekTable.id]" *ngFor="let weekTable of weekTables">-->
+<!--                   {{weekTable.time_id}}-->
+<!--                </option>-->
+<!--              </select>-->
+<!--            </div>-->
+
+
             <div class="form-group">
               <label for="day_id">Diena 1-pirmadienis, 2-antradienis, 3-trečiadienis, 4-ketvirtadienis,
                 5-penktadienis</label>
               <input type="text" ngModel name="day_id" class="form-control" id="day_id"
                      placeholder="Įrašykite tik skaičių" required>
             </div>
+
             <div class="form-group">
               <label for="time_id">Valanda: 8-8:00, 9-9:00, 10-10:00, 11-11:00, 12-12:00</label>
               <input type="text" ngModel name="time_id" class="form-control" id="time_id"
                      placeholder="Įrašykite tik skaičių" required>
             </div>
+
             <div class="form-group">
               <label for="purpose">Įrašykite vizito pobūdį: pirmas ar pakartotinas ar procedūra</label>
               <input type="text" ngModel name="purpose" class="form-control" id="purpose"
@@ -166,8 +187,15 @@
               </button>
               <button [disabled]="addForm.invalid" type="submit" class="btn btn-primary">Patvirtinti</button>
             </div>
+<!--            </div>-->
+<!--            </div>-->
           </form>
         </div>
+
+
+
+
+
       </div>
     </div>
   </div>
@@ -178,37 +206,39 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="updateEmployeeModalLabel">Redaguojame paciento {{editEmployee?.name}} pasirinkimą</h5>
+          <h5 class="modal-title" id="updateEmployeeModalLabel">Redaguojame paciento {{editEmployee?.name}} duomenis</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
 
-          <div class="form-group">
-            <label for="doctorEdit">Gydytojų sąrašas :</label>
-            <select id="doctorEdit" ngModel name="doctor_id" class="form-control" multiple
-                    aria-label="multiple select example" disabled>
-              <option value="{{doctor.id}}" *ngFor="let doctor of doctors">
-                {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}}
-                - {{doctor.doctorSpecialization}}
-              </option>
-            </select>
-          </div>
+<!--          <div class="form-group">-->
+<!--            <label for="doctorEdit">Gydytojų sąrašas :</label>-->
+<!--            <select id="doctorEdit" ngModel name="doctor_id" class="form-control" multiple-->
+<!--                    aria-label="multiple select example" disabled>-->
+<!--              <option value="{{doctor.id}}" *ngFor="let doctor of doctors">-->
+<!--                {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}}-->
+<!--                - {{doctor.doctorSpecialization}}-->
+<!--              </option>-->
+<!--            </select>-->
+<!--          </div>-->
 
           <form #editForm="ngForm">
-            <div class="form-group">
-              <label for="doctor_id">Gydytojas</label>
-              <input type="text" ngModel="{{editEmployee?.doctor_id}}" name="doctor_id" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="day_id">Savaitės diena</label>
-              <input type="text" ngModel="{{editEmployee?.day_id}}" name="date" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="time_id">Laikas</label>
-              <input type="text" ngModel="{{editEmployee?.time_id}}" name="time" class="form-control">
-            </div>
+
+<!--            <div class="form-group">-->
+<!--              <label for="doctor_id">Gydytojas</label>-->
+<!--              <input type="text" ngModel="{{editEmployee?.doctor_id}}" name="doctor_id" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="day_id">Savaitės diena</label>-->
+<!--              <input type="text" ngModel="{{editEmployee?.day_id}}" name="date" class="form-control">-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--              <label for="time_id">Laikas</label>-->
+<!--              <input type="text" ngModel="{{editEmployee?.time_id}}" name="time" class="form-control">-->
+<!--            </div>-->
+
             <div class="form-group">
               <label for="name">Pirmas/pakartotinas/procedura</label>
               <input type="text" ngModel="{{editEmployee?.purpose}}" name="purpose" class="form-control">
@@ -685,7 +715,7 @@
 
         <div *ngFor="let doctor of doctors">
           <div *ngIf=" editWeekTable?.doctor_id == doctor.id">
-            <h5 class="modal-title" id="editWeekTableModalLabel">Keičiame gydytojo
+            <h5 class="modal-title" id="editWeekTableModalLabel">Keičiame gydytojo ({{doctor.id}})
               {{doctor.doctorName}} {{doctor.doctorSurname}} savaitinį {{editWeekTable?.time_id}} valandos užimtumą</h5>
           </div>
         </div>
@@ -737,14 +767,15 @@
 
             <form #editWeekTableForm="ngForm">
 
-<!--              <div class="form-group">-->
-<!--                <label for="doctor_id">Gyd id</label>-->
-<!--                <input type="text" ngModel="{{editWeekTable?.doctor_id}}" name="doctor_id" class="form-control">-->
-<!--              </div>-->
-<!--              <div class="form-group">-->
-<!--                <label for="time_id">Valanda</label>-->
-<!--                <input type="text" ngModel="{{editWeekTable?.time_id}}" name="time_id" class="form-control">-->
-<!--              </div>-->
+              <div class="form-group">
+                <label for="doctor_id">Gydytojo indetifikacinis numeris</label>
+                <input type="text" ngModel="{{editWeekTable?.doctor_id}}" name="doctor_id" class="form-control" >
+              </div>
+
+              <div class="form-group">
+                <label for="time_id">Vizito pradžios valanda</label>
+                <input type="text" ngModel="{{editWeekTable?.time_id}}" name="time_id" class="form-control">
+              </div>
 
               <div class="form-group">
                 <label for="monday">Pirmadienis</label>
@@ -806,25 +837,12 @@
           </select>
         </div>
 
-        <!--        <h5 class="modal-title" id="weekTableModalLabel">Gydytojo {{editDoctor?.doctorName}} užimtumas</h5>-->
-
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
 
-        <!--        <div class="form-group">-->
-        <!--          <label for="doctor1">Gydytojų sąrašas :</label>-->
-        <!--          <select id="doctor1"  class="form-control" [(ngModel)] ="doctor" multiple aria-label="multiple select example"  >-->
-        <!--            <option [value]="[doctor.id]" *ngFor="let doctor of doctors" >-->
-        <!--              {{doctor.id}} -&nbsp; {{doctor.doctorName}} &nbsp; {{doctor.doctorSurname}} - {{doctor.doctorSpecialization}}-->
-        <!--            </option>-->
-        <!--          </select>-->
-        <!--        </div>-->
-
-
       </div>
       <div class="modal-body">
-
 
         <div class="container" id="week-container">
           <div class="row">
@@ -880,8 +898,9 @@
                     <div class="float-right btn-group btn-group-sm">
                       <a (click)="onOpenModalWeekTable(weekTable, 'editWeekTable')" class="btn btn-primary tooltips" data-placement="top"
                          data-original-title="Redaguoti" onclick="$('.modal').modal('hide')"><i class="fa fa-pencil"></i> </a>
-                      <a (click)="onOpenModalWeekTable(weekTable, 'deleteWeekTable')" class="btn btn-danger tooltips" data-placement="top"
-                         data-original-title="Ištrinti" onclick="$('.modal').modal('hide')"><i class="fa fa-times"></i></a>
+
+<!--                      <a (click)="onOpenModalWeekTable(weekTable, 'deleteWeekTable')" class="btn btn-danger tooltips" data-placement="top"-->
+<!--                         data-original-title="Ištrinti" onclick="$('.modal').modal('hide')"><i class="fa fa-times"></i></a>-->
                     </div>
                   </div>
 
